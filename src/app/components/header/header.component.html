@@ -1,0 +1,102 @@
+<nav class="navbar navbar-expand-lg " style="background-color: #f1f1f0;border-bottom: 1px solid rgb(218, 218, 218);">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">BRAND</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <!-- Tầng 1 -->
+                <li style="margin-left: 370px;"></li>
+
+                    
+                <li class="nav-item dropdown"  *ngFor="let categoryListFirst of categoryList" >
+                    <a class="nav-link dropdown-toggle tabs" routerLink="/products" role="button">
+                        {{categoryListFirst.name}}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- Tầng 2 -->
+
+                        <li class="dropdown-submenu" *ngFor="let categoryListSecond of categoryListFirst.subCategories">
+                            <a class="dropdown-item " >{{categoryListSecond.name}}</a>
+                            <ul class="dropdown-menu" *ngIf="categoryListSecond.subCategories && categoryListSecond.subCategories.length > 0">
+                                <!-- Tầng 3 -->
+                                <li *ngFor="let categoryListThird of categoryListSecond.subCategories">
+                                    <a 
+                                        class="dropdown-item" href="#">
+                                       {{ categoryListThird.name }}
+                                     </a>
+                                </li>
+                            </ul>
+                        </li>
+                       
+
+
+                    </ul>
+
+
+                </li>
+
+
+
+                <!-- <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle tabs" routerLink="/detail_product" role="button">
+                      NAM
+                  </a>
+                  <ul class="dropdown-menu">
+                  
+                      <li class="dropdown-submenu">
+                          <a class="dropdown-item dropdown-toggle" href="#">Tầng 2 - Action</a>
+                          <ul class="dropdown-menu">
+                             
+                              <li><a class="dropdown-item" href="#">Tầng 3 - Sub Action 1</a></li>
+                              <li><a class="dropdown-item" href="#">Tầng 3 - Sub Action 2</a></li>
+                          </ul>
+                      </li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                  </ul>
+              </li> -->
+
+                <!-- <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle tabs" href="#" role="button">
+                      TRẺ EM 
+                  </a>
+                  <ul class="dropdown-menu">
+                     
+                      <li class="dropdown-submenu">
+                          <a class="dropdown-item dropdown-toggle" href="#">Tầng 2 - Action</a>
+                          <ul class="dropdown-menu">
+                              
+                              <li><a class="dropdown-item" href="#">Tầng 3 - Sub Action 1</a></li>
+                              <li><a class="dropdown-item" href="#">Tầng 3 - Sub Action 2</a></li>
+                          </ul>
+                      </li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                  </ul>
+              </li> -->
+
+                <li class="nav-item dropdown" style="margin-left: 370px;">
+                    <a class="nav-link tabs" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link tabs" href="#">
+                        <i class="fa-regular fa-heart"></i></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link tabs" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+                </li>
+
+                <!-- Các mục khác... -->
+            </ul>
+        </div>
+    </div>
+</nav>
