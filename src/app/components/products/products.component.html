@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="padding-top: 100px;">
   <div class="textLink" style="margin-left: 40px; padding: 10px;"><span style="
     font-family:  'Kanit', sans-serif; font-size: 17px;font-weight: 500;
     ">Home</span>
@@ -37,7 +37,7 @@
     <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 logoPr" data-aos="zoom-in">
       <span>BRAND</span>
     </div>
-    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8" style="background-color: rgb(255, 255, 255);margin-left: -40px;width: 945px;" data-aos="zoom-in"> 
+    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8" style="background-color: rgb(255, 255, 255);margin-left: -40px;width: 945px;" data-aos="zoom-in">
       <div class="pr2">
         <div class="inputSearch">
           <input type="text" name="" id="" placeholder="    Tìm kiếm.....">
@@ -99,17 +99,20 @@
   <div class="productAll">
     <div class="row">
       <!--One products -->
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
+<!--      data-aos="zoom-in"-->
+      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "  data-aos="zoom-in"
+        *ngFor="let product of listProduct"
+      >
+        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;" routerLink="/detail_product">
           <div class="row product-container">
             <div class="col-12">
               <div class="product-image">
-                <img src="../../../assets/images/pr2.avif" alt="Product Image">
+                <img *ngFor="let img of product.images" [src]="'assets/product_img/' +img.image" >
                 <div class="content-overlay">
                   <button><i class="fa-regular fa-heart"></i></button>
                 </div>
                 <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
+                  <p>{{ product.price | number : '1.0-0'}}<span>Vnđ</span></p>
                 </div>
               </div>
             </div>
@@ -118,355 +121,358 @@
                 <div class="col-6">
                   <div class="row"><!-- color -->
                     <div class="col-8 product-color">
-                     <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                     <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                     <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                
+                   <span *ngFor="let color of product.colors"
+                         [style.background-image]="'url(assets/color_img/' + color.colorImg + ')'">
+                        </span>
+
+
+
                     </div>
                   </div>
 
                 </div>
                 <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
+                  <span *ngFor="let size of product.sizes">{{size.sizeName}} </span>
                 </div>
               </div>
             </div>
             <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
+              <span>{{product.name}}</span>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr3.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-12 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                    </div>
-                  </div>
+      </div >
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr4.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-8 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                    </div>
-                  </div>
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr5.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-8 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                    </div>
-                  </div>
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr5.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-8 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                    </div>
-                  </div>
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr3.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-12 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
+<!--                    </div>-->
+<!--                  </div>-->
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr6.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-8 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                      
-                    </div>
-                  </div>
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr4.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-8 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
+<!--                    </div>-->
+<!--                  </div>-->
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr7.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-8 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                    </div>
-                  </div>
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr5.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-8 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
+<!--                    </div>-->
+<!--                  </div>-->
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr8.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-8 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                    </div>
-                  </div>
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr5.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-8 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
+<!--                    </div>-->
+<!--                  </div>-->
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">
-          <div class="row product-container">
-            <div class="col-12">
-              <div class="product-image">
-                <img src="../../../assets/images/pr9.avif" alt="Product Image">
-                <div class="content-overlay">
-                  <button><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="content-price">
-                  <p>200,000<span>Vnđ</span></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row"><!-- color -->
-                    <div class="col-8 product-color">
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>
-                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>
-                  </div>
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr6.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-8 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
 
-                </div>
-                <div class="col-4 product-size">
-                  <span>S -</span> 
-                  <span>M -</span> 
-                  <span>L -</span> 
-                  <span>XL</span> 
-                </div>
-              </div>
-            </div>
-            <div class="col-12 product-name">
-              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-     
-      
+<!--                    </div>-->
+<!--                  </div>-->
 
-    </div>
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr7.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-8 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr8.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-8 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "data-aos="zoom-in">-->
+<!--        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;">-->
+<!--          <div class="row product-container">-->
+<!--            <div class="col-12">-->
+<!--              <div class="product-image">-->
+<!--                <img src="../../../assets/images/pr9.avif" alt="Product Image">-->
+<!--                <div class="content-overlay">-->
+<!--                  <button><i class="fa-regular fa-heart"></i></button>-->
+<!--                </div>-->
+<!--                <div class="content-price">-->
+<!--                  <p>200,000<span>Vnđ</span></p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">&lt;!&ndash; color &ndash;&gt;-->
+<!--                    <div class="col-8 product-color">-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_02_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg');"> </span>-->
+<!--                      <span style="background-image: url('https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg');"> </span>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--                <div class="col-4 product-size">-->
+<!--                  <span>S -</span>-->
+<!--                  <span>M -</span>-->
+<!--                  <span>L -</span>-->
+<!--                  <span>XL</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 product-name">-->
+<!--              <span>Áo Hoodie Vải Jersey Mềm Chui Đầu</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+
+
+<!--    </div>-->
   </div>
+</div>
 </div>

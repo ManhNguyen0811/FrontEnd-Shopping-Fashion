@@ -10,13 +10,19 @@ import { DetailProductComponent } from './components/detail-product/detail-produ
 import { CommonModule } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http';
+import { SigninComponent } from './components/signin/signin.component';
+import { ForgotPassComponent } from './components/forgot-pass/forgot-pass.component';
+import { CartComponent } from './components/cart/cart.component';
+import {PaymentsComponent} from './components/payments/payments.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,RouterModule,
-    RouterLink, HeaderComponent,
-    FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent],
+  imports: [RouterOutlet,RouterModule,CartComponent,
+    RouterLink, HeaderComponent,SigninComponent,ForgotPassComponent,
+    FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,
+    PaymentsComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

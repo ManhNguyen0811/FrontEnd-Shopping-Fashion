@@ -1,3 +1,14 @@
+.navAll{
+    z-index: 3;
+    justify-content: center; /* Canh giữa thanh điều hướng */
+    align-items: center;     /* Căn chỉnh theo chiều dọc */
+    width: 100%;     
+    width: auto;
+    background-color: rgb(140, 62, 62,0);
+    border-bottom: 1px solid rgb(218, 218, 218);
+    position: absolute;
+}
+
 .navbar-brand {
 
     font-size: 30px;
@@ -103,7 +114,7 @@
 .tabs:hover {
     transform: scale(1.05);
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
-    background-color: #eff1f3; 
+    // background-color: #eff1f3; 
     /* Màu nền mới khi hover */
     border-radius: 6px;
     color: #82bad1  !important;

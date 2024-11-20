@@ -1,52 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import categoryData from '../../../assets/json/category.json'
 import { NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {CategoryService} from '../../services/category/category.service';
+import {Category} from '../../model/category';
 
 
-
-
-
-interface Category{
-  id: number;
-  name: string;
-  subCategories: Category[];
-}
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink,NgForOf,CommonModule,HttpClientModule],
+  imports: [RouterLink, NgForOf, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
-
-
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-   ngOnInit(){
+export class HeaderComponent implements OnInit {
+  categoryList: Category[] = [];
+  constructor(
+    private categoryService: CategoryService) {}
+  ngOnInit(): void {
+    this.getCategoryAll();
+  }
+  getCategoryAll(): void {
+    this.categoryService.getCategoryAll().subscribe((allCategory: Category[])=>{
+      this.categoryList = allCategory;
+    })
+  }
 
-this.getDataApi()
-   }
-  categoryList : Category[] = categoryData;
-   constructor (private http: HttpClient) {}
-    getDataApi(){
-     this.http.get("https://pokeapi.co/api/v2/pokemon/ditto").subscribe((result :any) =>{
-    console.log(result);
-     })
-    }
-
-   bien: any
-
-  // constructor(private http: HttpClient){}
-  //
-  // public getMethodApi(){
-  //   this.http.get("https://pokeapi.co/api/v2/pokemon/ditto").subscribe((result:any)=>{
-  //     console.log( result)
-  //       this.bien = result;
-  //     console.log(this.bien)
-  //   })
-  // }
 
 
 
