@@ -14,14 +14,16 @@ import { SigninComponent } from './components/signin/signin.component';
 import { ForgotPassComponent } from './components/forgot-pass/forgot-pass.component';
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,RouterModule,CartComponent,
-    RouterLink, HeaderComponent,SigninComponent,ForgotPassComponent,
-    FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,
-    PaymentsComponent
+    RouterLink,
+    HeaderComponent,SigninComponent,ForgotPassComponent,
+    FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,ReactiveFormsModule
+   , PaymentsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

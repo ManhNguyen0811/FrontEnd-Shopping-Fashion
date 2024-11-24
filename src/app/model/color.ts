@@ -1,6 +1,5 @@
 export interface Color {
-  colorId: number;
-  colorName: string;
-  colorImg: string;
-
+  id: number;
+  name: string;
+  value_img: string;
 }

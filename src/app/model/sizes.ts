@@ -1,5 +1,5 @@
 
 export interface Size {
-  sizeId: number;
-  sizeName: string;
+  id: number;
+  name: string;
 }

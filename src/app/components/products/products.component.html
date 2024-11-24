@@ -40,7 +40,7 @@
     <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8" style="background-color: rgb(255, 255, 255);margin-left: -40px;width: 945px;" data-aos="zoom-in">
       <div class="pr2">
         <div class="inputSearch">
-          <input type="text" name="" id="" placeholder="    Tìm kiếm.....">
+          <input type="text" name="" id="" placeholder="Tìm kiếm....." [(ngModel)]="keyword" (input)="setKeyword(keyword)">
         </div>
       </div>
 
@@ -72,15 +72,18 @@
         <div class="fiterPr2">
           <div class="row" style="background-color: rgb(255, 255, 255);width: 57rem;">
             <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 fiterPr2Btn ">
-              <select class="form-select " style="font-family:  'Kanit', sans-serif;font-size: 14px;" data-aos="zoom-in">
-                <option selected>Giá</option>
-                <option value="1">Giá Cao Nhất</option>
+              <select class="form-select " style="font-family:  'Kanit', sans-serif;font-size: 14px;" data-aos="zoom-in"
+                      [(ngModel)]="sortBy" (ngModelChange)="setSortBy('price','asc')">
+                <option   >Giá</option>
+                <option >Giá Cao Nhất</option>
                 <option value="2">Giá Thấp Nhất</option>
               </select>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 fiterPr2Btn ">
-              <select class="form-select " style="font-family:  'Kanit', sans-serif;font-size: 14px;" data-aos="zoom-in">
-                <option selected>Mua Sắm </option>
+              <select class="form-select " style="font-family:  'Kanit', sans-serif;font-size: 14px;" data-aos="zoom-in"
+                      selected
+              >
+                <option >Mua Sắm </option>
                 <option value="1">Mua Nhiều Nhất</option>
                 <option value="2">Hàng Mới Nhập</option>
               </select>
@@ -97,22 +100,30 @@
 <!-- products -->
 <div class="container" style="background-color: rgb(255, 255, 255); margin-top: 40px;">
   <div class="productAll">
-    <div class="row">
+    <div class="row" *ngIf="products && products.length === 0">
+      <div class="no-products" style="padding: 100px">
+     Rất tiếc không có sản phẩm nào mà bạn đang tìm kiếm.
+      </div>
+    </div>
+    <div class="row" *ngIf="products && products.length > 0">
       <!--One products -->
 <!--      data-aos="zoom-in"-->
-      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "  data-aos="zoom-in"
-        *ngFor="let product of listProduct"
+      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 "  data-aos="zoom-in" *ngFor="let product of products"
+
       >
-        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;" routerLink="/detail_product">
+        <div class="prOne" style="background-color: rgb(255, 255, 255);padding-bottom: 20px;" routerLink="/detail_product" >
           <div class="row product-container">
             <div class="col-12">
               <div class="product-image">
-                <img *ngFor="let img of product.images" [src]="'assets/product_img/' +img.image" >
+                <img [src]="'assets/product_img/' + product.productImages[0].imageUrl ">
                 <div class="content-overlay">
                   <button><i class="fa-regular fa-heart"></i></button>
                 </div>
+<!--                <div class="">-->
+<!--                  <p> <span> {{product.skus[0].originalPrice}} Vnđ</span></p>-->
+<!--                </div>-->
                 <div class="content-price">
-                  <p>{{ product.price | number : '1.0-0'}}<span>Vnđ</span></p>
+                  <p> <span> {{product.skus[0].salePrice | currency:"VND":""}} VND</span></p>
                 </div>
               </div>
             </div>
@@ -121,27 +132,40 @@
                 <div class="col-6">
                   <div class="row"><!-- color -->
                     <div class="col-8 product-color">
-                   <span *ngFor="let color of product.colors"
-                         [style.background-image]="'url(assets/color_img/' + color.colorImg + ')'">
-                        </span>
 
-
+    <span *ngFor="let color of getUniqueColors(product.skus)"
+          [style.background-image]="'url(assets/color_img/' + color.value_img + ')'">
+    </span>
 
                     </div>
                   </div>
 
                 </div>
-                <div class="col-4 product-size">
-                  <span *ngFor="let size of product.sizes">{{size.sizeName}} </span>
+
+
+                <div class="col-2 product-size">
+                  <span  *ngFor="let size of getUniqueSizes(product.skus)">  {{ size.name }}</span>
                 </div>
               </div>
             </div>
             <div class="col-12 product-name">
-              <span>{{product.name}}</span>
+              <span> {{product.name}}</span>
             </div>
           </div>
         </div>
       </div >
+
+      <div *ngIf="totalPages">
+        <button
+          *ngFor="let page of totalPagesArray"
+          (click)="changePage(page)"
+          [class.active]="page === this.page"
+          class="btn btn-primary m-1">
+          {{ page }}
+        </button>
+      </div>
+
+
 
 
 

@@ -1,13 +1,14 @@
 import {Color} from './color';
 import {Size} from './sizes';
-import {Image} from './image';
+import {ProductImage} from './productImage';
+import {SKU} from './SKU';
 
 
 export interface Product {
   id: number;
-  price: number;
   name: string;
-  sizes: Size[];   // Danh sách các kích cỡ
-  colors: Color[]; // Danh sách các màu sắc
-  images: Image[]; // Danh sách các hình ảnh
+  skus: SKU[];
+  productImages: ProductImage[];
+  create_at: string; // Dạng ISO Date
+  update_at: string;
 }

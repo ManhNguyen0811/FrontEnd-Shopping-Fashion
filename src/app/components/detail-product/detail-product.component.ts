@@ -1,7 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {DetailProductService} from '../../services/detail-product/detail-product.service';
+import {DetailProduct} from '../../model/detail-product/DetailProduct';
+import {SKU} from '../../model/SKU';
+import {ProductImage} from '../../model/productImage';
+import {SelectedImage} from '../../model/detail-product/selectedImage';
+import {SelectedSku} from '../../model/detail-product/selectedSku';
+import {Color} from '../../model/color';
 
 @Component({
   selector: 'app-detail-product',
@@ -10,24 +17,83 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './detail-product.component.html',
   styleUrl: './detail-product.component.scss'
 })
-export class DetailProductComponent {
-  listBtnSize = ['S', 'M', 'L', 'XL'];
+export class DetailProductComponent implements OnInit {
+  detailProductList?: DetailProduct;
+  skusList? :SKU[]
+  productImagesList? : ProductImage[];
+  dataSkus? : SelectedSku;
+  dataImg?: SelectedImage;
+
+  activeIndexColor: number | null = null;
+
+
+  constructor(private detailProductService: DetailProductService) {
+  }
+
+  ngOnInit() {
+    this.loadDetailProduct(1,6,2)
+    console.log("Day alf detail : "+this.detailProductList?.name)
+    // @ts-ignore
+    console.log("Day alf skusList : " + this.skusList[0].originalPrice)
+    // @ts-ignore
+    console.log("Day alf skusListaaa : "+this.skusList[0].color.name)
+    // @ts-ignore
+    console.log("Day alf SKUSSSSSS : "+this.dataSkus.id)
+
+  }
+
+
+
+  loadDetailProduct(idProduct :number,colorId: number,sizeId : number ) {
+    this.detailProductService.getUrlDetailProduct(idProduct,colorId,sizeId).subscribe((dataDetail : DetailProduct) =>{
+      this.detailProductList = dataDetail
+      this.productImagesList = dataDetail.productImages
+      this.skusList = dataDetail.skus;
+      this.dataSkus = dataDetail.selectedSku
+      this.dataImg = dataDetail.selectedImage
+
+    })
+  }
+
+
+
+
+  getUniqueColors(skus?: any[]): any[] {
+    const uniqueColors = new Map();
+    // @ts-ignore
+    skus.forEach(sku => {
+      uniqueColors.set(sku.color.value_img, sku.color);
+
+    });
+    return Array.from(uniqueColors.values());
+  }
+
+  getUniqueSizes(skus?: any[]): any[] {
+    const uniqueSizes = new Map();
+    // @ts-ignore
+    skus.forEach(sku => {
+      uniqueSizes.set(sku.size.name, sku.size);
+    });
+    return Array.from(uniqueSizes.values());
+  }
+
+
+
+
+
+
+
   activeIndexSize: number | null = null;
   setActiveSize(index: number) {
     this.activeIndexSize = index;
   };
 
 
-  listColor =
-    [
-      'https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_67_465207_chip.jpg',
-      'https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_32_465207_chip.jpg',
-      'https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/465207/chip/goods_09_465207_chip.jpg'
-    ];
-  activeIndexColor: number | null = null;
 
-  setActiveColor(index: number) {
+
+  setActiveColor(index: number, idColor : number) {
     this.activeIndexColor = index;
+
     console.log(index);
   };
 
