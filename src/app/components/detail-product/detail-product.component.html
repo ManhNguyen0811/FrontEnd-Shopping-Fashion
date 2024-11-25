@@ -14,7 +14,7 @@
     <div class="col-sm-1 col-md-1 col-lg-1 col-xl-2 " style="background-color: rgb(255, 255, 255);width: 140px;">
       <div class="detail-pr">
         <div class="row" style=" height: 420px;overflow-y: auto;   scrollbar-width: none; ">
-          <div class="col-12" *ngFor="let imgList of  productImagesList">
+          <div class="col-12" *ngFor="let imgList of  productImagesList" >
             <img [src]="'assets/product_img/' + imgList.imageUrl" alt="">
           </div>
 
@@ -64,7 +64,7 @@
             <div class="detail-product-color">
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 30px;">
-                  <p>Màu sắc : Đen </p>
+                  <p>Màu sắc : {{colorName}} </p>
 
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -74,7 +74,8 @@
 
                       <div class="row" style="margin-left: -10px;">
                         <div class="col-3 detail-product-colorAll activeBoderSize" style="width: 50px;"
-                             *ngFor="let btnColor of getUniqueColors(detailProductList?.skus); let i = index" (click)="setActiveColor(i,btnColor.id)"
+                             *ngFor="let btnColor of getUniqueColors(detailProductList?.skus); let i = index"
+                             (click)="setActiveColor(i,btnColor.id)"
                              [ngClass]="{'activeBoderColor' :activeIndexColor === i }"
                         >
                           <span [style.background-image]="'url(assets/color_img/' + btnColor.value_img + ')'">
@@ -97,7 +98,7 @@
             <div class="detail-product-size">
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 30px;">
-                  <p>Kích cỡ : M </p>
+                  <p>Kích cỡ : {{sizeName}} </p>
 
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -109,7 +110,7 @@
 
                         <div class="col-3 detail-product-sizeAll" style="width: 50px;"
                              *ngFor="let btnSize of getUniqueSizes(detailProductList?.skus);let i = index"
-                             (click)="setActiveSize(i)"
+                             (click)="setActiveSize(i,btnSize.id)"
                              [ngClass]="{'activeBoderSize' :activeIndexSize === i}"
                         >
 

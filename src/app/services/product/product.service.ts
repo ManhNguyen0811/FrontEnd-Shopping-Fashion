@@ -4,13 +4,17 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {Product} from '../../model/product';
 import {ProductsList} from '../../model/Products';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   private apiUrl = `${environment.apiBaseUrl}/api/v1/products`;
-  constructor(private http : HttpClient ) { }
+  constructor(private http : HttpClient ,
+                private router : Router
+              ) { }
 
 
   getUrlProduct(categoryId: number = 1

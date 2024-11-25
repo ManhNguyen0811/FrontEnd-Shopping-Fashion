@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {DetailProductService} from '../../services/detail-product/detail-product.service';
@@ -9,6 +9,8 @@ import {ProductImage} from '../../model/productImage';
 import {SelectedImage} from '../../model/detail-product/selectedImage';
 import {SelectedSku} from '../../model/detail-product/selectedSku';
 import {Color} from '../../model/color';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-detail-product',
@@ -23,24 +25,36 @@ export class DetailProductComponent implements OnInit {
   productImagesList? : ProductImage[];
   dataSkus? : SelectedSku;
   dataImg?: SelectedImage;
+  colorName : string = "";
+  sizeName : string = "";
+  productId?: number;
+  sizeId?: number;
+  colorId?: number;
 
   activeIndexColor: number | null = null;
 
 
-  constructor(private detailProductService: DetailProductService) {
+  constructor(private detailProductService: DetailProductService,
+              private router: ActivatedRoute
+              ) {
   }
 
   ngOnInit() {
-    this.loadDetailProduct(1,6,2)
-    console.log("Day alf detail : "+this.detailProductList?.name)
-    // @ts-ignore
-    console.log("Day alf skusList : " + this.skusList[0].originalPrice)
-    // @ts-ignore
-    console.log("Day alf skusListaaa : "+this.skusList[0].color.name)
-    // @ts-ignore
-    console.log("Day alf SKUSSSSSS : "+this.dataSkus.id)
+
+    this.router.params.subscribe(params => {
+      this.productId = +params['id']; // dấu + để chuyển đổi thành kiểu number
+      this.sizeId = +params['sizeId'];
+      this.colorId = +params['colorId'];
+      this.loadDetailProduct(this.productId,this.colorId,this.sizeId)
+      console.log(this.productId);
+      console.log(this.colorId);
+      console.log(this.sizeId );
+    });
+
 
   }
+
+
 
 
 
@@ -77,25 +91,43 @@ export class DetailProductComponent implements OnInit {
     return Array.from(uniqueSizes.values());
   }
 
+  getQtyinStock(skus? : any[]): String  {
+    // @ts-ignore
+      skus.forEach(sku => {
 
+      })
 
-
-
-
+    return""
+  }
 
   activeIndexSize: number | null = null;
-  setActiveSize(index: number) {
+  setActiveSize(index: number,idSize :number) {
+    console.log("idSize" +idSize);
     this.activeIndexSize = index;
+    let found = false; // Biến cờ để ngăn lặp
+
+    // @ts-ignore
+    this.skusList.forEach(sku => {
+      if (!found && sku.size.id === idSize) {
+        this.sizeName = sku.size.name; // Cập nhật tên màu
+        found = true; // Đặt biến cờ để ngăn lặp
+      }
+    });
   };
 
 
-
-
-  setActiveColor(index: number, idColor : number) {
+  setActiveColor(index: number, idColor: number) {
     this.activeIndexColor = index;
+    let found = false; // Biến cờ để ngăn lặp
 
-    console.log(index);
-  };
+    // @ts-ignore
+    this.skusList.forEach(sku => {
+      if (!found && sku.color.id === idColor) {
+        this.colorName = sku.color.name; // Cập nhật tên màu
+        found = true; // Đặt biến cờ để ngăn lặp
+      }
+    });
+  }
 
 
   activeQty: number = 0;
@@ -111,6 +143,7 @@ export class DetailProductComponent implements OnInit {
     this.activeQty++;
   };
   checkQty() {
+
     if (this.activeQty < 0) {
       this.activeQty = 0;
     }
