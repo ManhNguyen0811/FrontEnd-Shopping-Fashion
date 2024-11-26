@@ -12,14 +12,14 @@ export class CartService {
   private urlApi = `${environment.apiBaseUrl}/api/v1`;
   constructor(private http: HttpClient) { }
 
-
-  addToCart(userId: number, cartDTO: { skuId: number; quantity: number }): Observable<any> {
-    return this.http.post(`${this.urlApi}?userId=${userId}`, cartDTO);
-  }
-
   getDataCart(idUser : number ) : Observable<CartResponse> {
     return this.http.get<CartResponse>(`${this.urlApi}/cart?userId=${idUser}`);
   }
+
+  addToCart(userId: number, cartDTO: { quantity: number; skuId: number | undefined }): Observable<any> {
+    return this.http.post(`${this.urlApi}/cart?userId=${userId}`, cartDTO);
+  }
+
 
   getTotalItemUrl(idUser: number): Observable<any> {
     return this.http.get<any>(`${this.urlApi}/cart/totalItem?userId=${idUser}`);

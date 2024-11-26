@@ -14,7 +14,7 @@ import {Product} from '../../model/product';
 import {log} from 'node:util';
 import {CartService} from '../../services/cart/cart.service';
 import {CartDTO} from '../../model/cart/CartDTO';
-
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-detail-product',
@@ -24,6 +24,8 @@ import {CartDTO} from '../../model/cart/CartDTO';
   styleUrl: './detail-product.component.scss'
 })
 export class DetailProductComponent implements OnInit {
+  showSuccessMessage: boolean = false;
+  message: string = ""
   detailProductList?: DetailProduct;
   skusList? :SKU[]
   productImagesList? : ProductImage[];
@@ -39,13 +41,14 @@ export class DetailProductComponent implements OnInit {
   productId?: number;
   sizeId?: number;
   colorId?: number;
-
-
+  activeIndexSize: number | null = null;
+  activeIndexColor: number | null = null;
 
 
 
   constructor(private detailProductService: DetailProductService,
               private cartService: CartService,
+              private cdRef: ChangeDetectorRef,
               private router: ActivatedRoute,
               private route: Router
               ) {
@@ -63,21 +66,54 @@ export class DetailProductComponent implements OnInit {
       this.originalPrice = this.dataSkus?.originalPrice
       this.salePrice =  this.dataSkus?.salePrice
 
-
     });
   }
 
-  addToCart(userId: number ,skuId:number, quantity:number){
+
+  addToCart(userId: number, skuId: number | undefined, quantity: number){
+    if (quantity == 0 || quantity <= 0 || isNaN(quantity)){
+      this.message = "Số Lượng Không Hợp Lệ !!!"
+      this.showSuccessMessage = true;
+      setTimeout(() => {
+        this.getTotalItems(1)
+        this.showSuccessMessage = false;
+      }, 1000);
+      return ;
+    }
     const cartDTO ={skuId:skuId, quantity:quantity};
+    //@ts-ignore
+    // confirm("userId: "+userId +"skuId: "+cartDTO.skuId+ "quantity: "+cartDTO.quantity)
     this.cartService.addToCart(userId, cartDTO).subscribe(
       (response) => {
-        console.log('Thêm Cart Thành Công:', response);
+        this.message = "Thêm Cart Thành Công"
+        this.showSuccessMessage = true;
+        // this.cdr.detectChanges();
+        setTimeout(() => {
+          this.getTotalItems(1)
+          this.showSuccessMessage = false;
+        }, 1000);
+
+
       },(error) => {
+        this.message = "Thêm Cart Thất Bại "
+        this.showSuccessMessage = true;
+        // this.cdr.detectChanges();
+        setTimeout(() => {
+          this.getTotalItems(1)
+          this.showSuccessMessage = false;
+        }, 1000);
         console.log(error,"Thêm thất bại.");
       }
     )
   }
+  getTotalItems(userId: number): void {
+    this.cartService.getTotalItemUrl(userId).subscribe(response => {
+      // Lấy số totalItem từ API và gán vào biến totalItem
 
+    }, error => {
+      console.error('Lỗi khi lấy dữ liệu từ API:', error);
+    });
+  }
 
 
   loadDetailProduct(idProduct: number, colorId: number, sizeId: number): void {
@@ -93,6 +129,7 @@ export class DetailProductComponent implements OnInit {
       this.originalPrice = this.dataSkus?.originalPrice;
       this.salePrice = this.dataSkus?.salePrice;
 
+      this.getOriginalPriceBySizeAndColor(sizeId,colorId)
     }, (error) => {
       console.error("Error loading data: ", error);
     });
@@ -101,15 +138,15 @@ export class DetailProductComponent implements OnInit {
 
 
   getOriginalPriceBySizeAndColor(idsize: number, idcolor: number | undefined): void {
-
     if (!this.skusList || this.skusList.length === 0) {
       console.warn("SKUs list is empty or undefined!");
       return;
     }
 
-
     this.skusList.forEach((sku) => {
       if (sku.size.id === idsize && sku.color.id === idcolor) {
+        this.colorName = sku.color.name
+        this.sizeName = sku.size.name
         this.originalPrice = sku.originalPrice
         this.salePrice = sku.salePrice
         this.skuId = sku.id
@@ -118,9 +155,6 @@ export class DetailProductComponent implements OnInit {
         return; // Thoát ngay sau khi tìm thấy
       }
     });
-
-    // Nếu không tìm thấy SKU nào thỏa mãn
-    console.warn(`No SKU found with size ID ${idsize} and color ID ${idcolor}`);
   }
 
 
@@ -161,68 +195,76 @@ export class DetailProductComponent implements OnInit {
   }
 
   onImageClick(img: ProductImage): void {
+
     this.dataImg = img;
+    //@ts-ignore
+    // this.setActiveColor(2,dataImg.colorId)
+
+
 
   }
-    activeIndexSize: number | null = null;
-    setActiveSize(index: number, idSize: number): void {
-      console.log("indexindexindex" + index);
-      this.activeIndexSize = index;
-      this.sizeId = idSize;
-      this.getOriginalPriceBySizeAndColor(this.sizeId,this.colorId)
+  setActiveSize(index: number, idSize: number): void {
+    // this.activeIndexSize = index;
+    this.sizeId = idSize;  // Lưu lại sizeId
+    console.log("index size: ", index, "sizeId: ", idSize);
 
+    // Cập nhật lại giá trị giá trị dựa trên size và color hiện tại
+    this.getOriginalPriceBySizeAndColor(this.sizeId, this.colorId);
 
-
-      if (!this.skusList || this.skusList.length === 0) {
-        return;
-      }
-      let found = false;
-      // @ts-ignore
-      try {
-        this.skusList.forEach((sku) => {
-          if (!found && sku.size.id === idSize) {
-            this.sizeName = sku.size.name; // Cập nhật tên kích cỡ
-            found = true;
-          }
-        });
-      } catch (error) {
-        console.error("Error processing SKUs for size:", error);
-      }
-
-
+    // Kiểm tra danh sách SKUs và cập nhật tên kích thước
+    if (!this.skusList || this.skusList.length === 0) {
+      return;
     }
-  activeIndexColor: number | null = null;
-    setActiveColor(index: number, idColor: number): void {
 
-      this.activeIndexColor = index;
-      console.log("indexindexindex" + index);
-
-      this.colorId = idColor;
-      // @ts-ignore
-      this.getOriginalPriceBySizeAndColor(this.sizeId,this.colorId)
-
-
-
-
-      if (!this.skusList || this.skusList.length === 0) {
-        return;
-      }
-
-      let found = false;
-
-      // @ts-ignore
-      try {
-        this.skusList.forEach((sku) => {
-          if (!found && sku.color.id === idColor) {
-            this.colorName = sku.color.name;
-
-            found = true;
-          }
-        });
-      } catch (error) {
-        console.error("Error processing SKUs for color:", error);
-      }
+    let found = false;
+    try {
+      this.skusList.forEach((sku) => {
+        if (!found && sku.size.id === idSize) {
+          this.sizeName = sku.size.name;
+          found = true;
+        }
+      });
+    } catch (error) {
+      console.error("Error processing SKUs for size:", error);
     }
+
+    // Cập nhật URL sau khi thay đổi kích cỡ
+    this.updateUrl();
+  }
+
+  setActiveColor(index: number, idColor: number): void {
+    // this.activeIndexColor = index;
+    this.colorId = idColor;  // Lưu lại colorId
+    console.log("index color: ", index, "colorId: ", idColor);
+
+    // Cập nhật lại giá trị giá trị dựa trên size và color hiện tại
+    //@ts-ignore
+    this.getOriginalPriceBySizeAndColor(this.sizeId, this.colorId);
+
+    // Kiểm tra danh sách SKUs và cập nhật tên màu sắc
+    if (!this.skusList || this.skusList.length === 0) {
+      return;
+    }
+
+    let found = false;
+    try {
+      this.skusList.forEach((sku) => {
+        if (!found && sku.color.id === idColor) {
+          this.colorName = sku.color.name;
+          found = true;
+        }
+      });
+    } catch (error) {
+      console.error("Error processing SKUs for color:", error);
+    }
+
+    // Cập nhật URL sau khi thay đổi màu sắc
+    this.updateUrl();
+  }
+
+
+
+
 
   updateUrl(): void {
     if (this.productId && this.sizeId && this.colorId) {
@@ -231,6 +273,7 @@ export class DetailProductComponent implements OnInit {
       });
     }
   }
+
 
   activeQty: number = 0;
   activeMinus() {

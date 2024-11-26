@@ -1,3 +1,7 @@
+<div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+  {{message}}
+</div>
+
 <div class="container" style="padding-top:90px;">
   <div class="textLink" style="margin-left: 40px; padding: 10px;"><span style="
       font-family:  'Kanit', sans-serif; font-size: 17px;font-weight: 500;
@@ -163,8 +167,9 @@
           </div>
 
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-          {{skuId}}
-            <div class="detail-product-btnAddtoCart"  >
+          {{skuId}} {{activeQty}}
+
+            <div class="detail-product-btnAddtoCart" (click)="addToCart(1,skuId,activeQty)" >
               <div class="btnAddtoCart slide_leftbtnAddtoCart">THÊM VÀO GIỎ HÀNG</div>
 
             </div>

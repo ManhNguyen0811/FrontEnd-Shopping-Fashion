@@ -18,6 +18,8 @@ import {CartDTO} from '../../model/cart/CartDTO';
   styleUrl: './cart.component.scss'
 })
 export class CartComponent implements OnInit {
+  showSuccessMessage: boolean = false;
+  message: string = ""
   totalPrice : number = 0;
   totalQty : number = 0;
   listCartResponse? : CartResponse;
@@ -26,7 +28,7 @@ export class CartComponent implements OnInit {
   }
   ngOnInit() {
     this.loadCart(1)
-    console.log("loadCart: "+this.listCartResponse);
+
 
   }
 
