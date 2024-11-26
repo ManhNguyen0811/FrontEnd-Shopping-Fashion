@@ -7,6 +7,7 @@ import {firstValueFrom, Observable} from 'rxjs';
 import {CartItem} from '../../model/cart/CartItem';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {CartDTO} from '../../model/cart/CartDTO';
 
 
 @Component({
@@ -26,29 +27,35 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.loadCart(1)
     console.log("loadCart: "+this.listCartResponse);
-    this.updateQty(1,1)
+
   }
+
+
+
+
 
   updateQty(cartId: number, qty: number) {
     console.log("cartId: "+ cartId)
     console.log("qty: "+ qty)
-    this.cartService.updateQty(cartId, qty).subscribe();
-    this.loadCart(1)
-    // window.location.reload()
+    this.cartService.updateQty(cartId, qty).subscribe(()=>{
+      window.location.reload()
+    });
   }
 
 
+  loadCart(userid: number): void {
+    this.totalPrice = 0; // Reset giá trị tổng tiền
+    this.totalQty = 0;   // Reset giá trị tổng số lượng
 
-  loadCart(userid : number) : void{
-    this.cartService.getDataCart(userid).subscribe((dataCart : CartResponse) => {
-      this.listCartResponse = dataCart
-      this.listCartItem = dataCart.cartItem
-      dataCart.cartItem.forEach(item =>{
+    this.cartService.getDataCart(userid).subscribe((dataCart: CartResponse) => {
+      this.listCartResponse = dataCart;
+      this.listCartItem = dataCart.cartItem;
+
+      dataCart.cartItem.forEach(item => {
         this.totalPrice += item.price * item.quantity;
         this.totalQty += item.quantity;
-      })
-
-    })
+      });
+    });
   }
 
 

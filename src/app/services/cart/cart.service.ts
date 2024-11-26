@@ -13,6 +13,10 @@ export class CartService {
   constructor(private http: HttpClient) { }
 
 
+  addToCart(userId: number, cartDTO: { skuId: number; quantity: number }): Observable<any> {
+    return this.http.post(`${this.urlApi}?userId=${userId}`, cartDTO);
+  }
+
   getDataCart(idUser : number ) : Observable<CartResponse> {
     return this.http.get<CartResponse>(`${this.urlApi}/cart?userId=${idUser}`);
   }

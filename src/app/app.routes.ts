@@ -20,7 +20,7 @@ export const routes: Routes = [
      { path: 'forgotPass', component: ForgotPassComponent },
     { path: 'cart', component: CartComponent },
   { path: 'payments', component: PaymentsComponent },
-  { path: 'detail_product/:id/:colorId/:sizeId', component: DetailProductComponent },
+  { path: 'detail_product/:productId/:colorId/:sizeId', component: DetailProductComponent },
 
 
 ];

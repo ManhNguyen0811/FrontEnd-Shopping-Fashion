@@ -46,15 +46,9 @@ export class ProductsComponent implements OnInit {
       this.loadProducts(this.categoryId);
     });
   }
-  goToDetail(productId: number, categoryId: number, colorId: number) {
-    this.router.navigate(['/detail_product'], {
-      state: {
-        productId: productId,
-        categoryId: categoryId,
-        colorId: colorId
-      }
-    });
-  }
+
+
+
 
 
   loadProducts(categoryId: number): void {

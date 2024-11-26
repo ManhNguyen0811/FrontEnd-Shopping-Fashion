@@ -14,7 +14,7 @@
     <div class="col-sm-1 col-md-1 col-lg-1 col-xl-2 " style="background-color: rgb(255, 255, 255);width: 140px;">
       <div class="detail-pr">
         <div class="row" style=" height: 420px;overflow-y: auto;   scrollbar-width: none; ">
-          <div class="col-12" *ngFor="let imgList of  productImagesList" >
+          <div class="col-12" *ngFor="let imgList of  productImagesList"  (click)="onImageClick(imgList)">
             <img [src]="'assets/product_img/' + imgList.imageUrl" alt="">
           </div>
 
@@ -37,21 +37,21 @@
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="detail-product-price">
-            <div class="row" *ngIf="dataSkus?.originalPrice !== dataSkus?.salePrice">
+            <div class="row" *ngIf="originalPrice !== salePrice">
 
               <div class="col-2">
                 <p> <span [ngStyle]="{'text-decoration': 'line-through', 'color': '#8ba1b0','font-size' :'18px'}">
-                                  {{ dataSkus?.originalPrice | currency : "VND" : "" }}
+                                  {{ originalPrice | currency : "VND" : "" }}
                                 </span></p>
               </div>
               <div class="col-3">
 
-                <p><span>{{ dataSkus?.salePrice | currency : "VND" : "" }}</span>
+                <p><span>{{ salePrice | currency : "VND" : "" }}</span>
                   <span style="font-style: italic; font-size: 18px;">Vnđ</span></p>
               </div>
             </div>
-            <div class="row" *ngIf="dataSkus?.originalPrice === dataSkus?.salePrice">
-              <p> {{ dataSkus?.originalPrice | currency : "VND" : "" }}
+            <div class="row" *ngIf="originalPrice === salePrice">
+              <p> {{ originalPrice | currency : "VND" : "" }}
                 <span style="font-style: italic; font-size: 18px;">Vnđ</span>
               </p>
             </div>
@@ -163,7 +163,8 @@
           </div>
 
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="detail-product-btnAddtoCart">
+          {{skuId}}
+            <div class="detail-product-btnAddtoCart"  >
               <div class="btnAddtoCart slide_leftbtnAddtoCart">THÊM VÀO GIỎ HÀNG</div>
 
             </div>
