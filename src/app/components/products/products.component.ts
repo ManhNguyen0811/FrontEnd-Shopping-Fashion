@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 
 
-import {RouterLink} from '@angular/router';
+import {Route, RouterLink} from '@angular/router';
 import {Product} from '../../model/product';
 import {CommonModule} from '@angular/common';
 import {DetailProductComponent} from '../detail-product/detail-product.component';
-
+import { Router } from '@angular/router';
 import {ProductService} from '../../services/product/product.service';
 import {ProductsList} from '../../model/Products';
 import {CategoryService} from '../../services/category/category.service';
@@ -34,6 +34,7 @@ export class ProductsComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private categoryService: CategoryService,
+              private router: Router
   ) {
   }
 
@@ -45,6 +46,10 @@ export class ProductsComponent implements OnInit {
       this.loadProducts(this.categoryId);
     });
   }
+
+
+
+
 
   loadProducts(categoryId: number): void {
     // @ts-ignore

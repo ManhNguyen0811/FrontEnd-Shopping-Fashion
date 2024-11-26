@@ -7,6 +7,7 @@ import {Category} from '../../model/category';
 import {Product} from '../../model/product';
 import {ProductsList} from '../../model/Products';
 import {ProductService} from '../../services/product/product.service';
+import {CartService} from '../../services/cart/cart.service';
 
 
 @Component({
@@ -18,19 +19,21 @@ import {ProductService} from '../../services/product/product.service';
 })
 export class HeaderComponent implements OnInit {
   categoryList: Category[] = [];
-
+totalItems?: number;
   products?: Product[];
   totalPages?: number;
 
 
   constructor(
     private categoryService: CategoryService,
+    private cartService: CartService,
 
 
     ) {}
   ngOnInit(): void {
     this.getCategoryAll();
-
+    this.getTotalItems(1)
+    console.log("total" +  this.totalItems)
   }
   getCategoryAll(): void {
     this.categoryService.getCategoryAll().subscribe((allCategory: Category[])=>{
@@ -41,7 +44,19 @@ export class HeaderComponent implements OnInit {
 
   onCategorySelect(id: number): void {
     this.categoryService.setCategoryId(id);
+
+  }
+
+  getTotalItems(userId: number): void {
+    this.cartService.getTotalItemUrl(userId).subscribe(response => {
+      // Lấy số totalItem từ API và gán vào biến totalItem
+      this.totalItems = response.totalItem;
+    }, error => {
+      console.error('Lỗi khi lấy dữ liệu từ API:', error);
+    });
+  }
+
   }
 
 
-}
+
