@@ -1,0 +1,16 @@
+<form (ngSubmit)="onSubmit()">
+  <label class="form-label" for="city">City:</label>
+  <input class="form-control" type="text" id="city" [(ngModel)]="address.city" name="city" required>
+
+  <label class="form-label" for="ward">Ward:</label>
+  <input class="form-control" type="text" id="ward" [(ngModel)]="address.ward" name="ward" required>
+
+  <label class="form-label" for="street">Street:</label>
+  <input class="form-control" type="text" id="street" [(ngModel)]="address.street" name="street" required>
+
+  <label class="form-label" for="isDefault">Is Default:</label>
+  <input class="form-control" type="checkbox" id="isDefault" [(ngModel)]="address.isDefault" name="isDefault">
+
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+<a routerLink="/addresses">Danh Sách Địa Chỉ</a>

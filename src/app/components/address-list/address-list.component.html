@@ -1,0 +1,28 @@
+<div class="address-list">
+  <h2>Danh Sách Địa Chỉ</h2>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Thành Phố</th>
+      <th>Quận/Huyện</th>
+      <th>Đường</th>
+      <th>Địa Chỉ Mặc Định</th>
+      <th>Thao Tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let address of addresses">
+      <td>{{ address.id }}</td>
+      <td>{{ address.city }}</td>
+      <td>{{ address.ward }}</td>
+      <td>{{ address.street }}</td>
+      <td>{{ address.isDefault ? 'Có' : 'Không' }}</td>
+      <td>
+        <button (click)="deleteAddress(address.id)" class="btn btn-danger">Xóa</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
