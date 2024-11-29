@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {CartService} from '../../services/cart/cart.service';
 
 import {CartResponse} from '../../model/cart/CartResponse';
@@ -24,15 +24,15 @@ export class CartComponent implements OnInit {
   totalQty : number = 0;
   listCartResponse? : CartResponse;
   listCartItem? : CartItem[];
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,  private router: Router) {
   }
+
+
   ngOnInit() {
     this.loadCart(1)
-
+console.log("listCartItem: "+ this.listCartItem)
 
   }
-
-
 
 
 

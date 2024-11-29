@@ -313,13 +313,9 @@ export class DetailProductComponent implements OnInit {
     if (this.activeQty > this.qtyInStock) {
       this.message = "Số lượng nhập vượt quá số lượng trong kho.";
       this.showSuccessMessage = true;
-
-      // Hiển thị thông báo trong 1 giây
       setTimeout(() => {
         this.showSuccessMessage = false;
       }, 1000);
-
-      // Reset số lượng nhập về 1
       this.activeQty = 1;
     }
   }
@@ -327,7 +323,6 @@ export class DetailProductComponent implements OnInit {
   allowOnlyNumbers(event: KeyboardEvent): void {
     const charCode = event.key.charCodeAt(0);
 
-    // Chặn ký tự không phải số (cho phép phím điều hướng như Backspace, Delete)
     if ((charCode < 48 || charCode > 57) && charCode !== 8) {
       event.preventDefault();
     }

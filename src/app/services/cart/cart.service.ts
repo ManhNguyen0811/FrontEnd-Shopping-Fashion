@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {catchError, Observable, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, Observable, throwError} from 'rxjs';
 import {CartResponse} from '../../model/cart/CartResponse';
 
 
@@ -10,6 +10,8 @@ import {CartResponse} from '../../model/cart/CartResponse';
 })
 export class CartService {
   private urlApi = `${environment.apiBaseUrl}/api/v1`;
+
+
   constructor(private http: HttpClient) { }
 
   getDataCart(idUser : number ) : Observable<CartResponse> {
@@ -27,12 +29,23 @@ export class CartService {
 
   updateQty(cartId : number, qtyNew : number): Observable<ArrayBuffer>   {
 
+
+
+
+
    return this.http.put<ArrayBuffer>(`${this.urlApi}/cart?cartId=${cartId}&newQuantity=${qtyNew} `,{}).pipe(
      catchError((error) =>{
        console.error('Lỗi khi cập nhật số lượng:', error);
        return throwError(() => new Error('Không thể cập nhật số lượng!'));
      })
    );
+
+
+
+
+
+
+
 }
 
 }

@@ -155,7 +155,9 @@
                             <div class="priceBill">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="btnBuyCart slide_leftbtnBuyCart" routerLink ="/payments">MUA NGAY</div>
+                                        <div class="btnBuyCart slide_leftbtnBuyCart"
+                                             [routerLink]="['/payments', totalPrice,totalQty]">
+                                        >MUA NGAY</div>
                                     </div>
                                     <p></p>
                                     <div class="col-5">
