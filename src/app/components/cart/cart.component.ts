@@ -24,7 +24,7 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService) {
   }
   ngOnInit() {
-    this.loadCart(1)
+    this.loadCart(2)
     console.log("loadCart: "+this.listCartResponse);
     this.updateQty(1,1)
   }
@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
     console.log("cartId: "+ cartId)
     console.log("qty: "+ qty)
     this.cartService.updateQty(cartId, qty).subscribe();
-    this.loadCart(1)
+    this.loadCart(2)
     // window.location.reload()
   }
 
