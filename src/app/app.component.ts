@@ -15,6 +15,7 @@ import { ForgotPassComponent } from './components/forgot-pass/forgot-pass.compon
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {WishlistComponent} from './components/wishlist/wishlist.component';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     RouterLink,
     HeaderComponent,SigninComponent,ForgotPassComponent,
     FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,ReactiveFormsModule
-   , PaymentsComponent
+   , PaymentsComponent,WishlistComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

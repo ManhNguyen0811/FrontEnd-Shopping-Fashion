@@ -8,6 +8,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { ForgotPassComponent } from './components/forgot-pass/forgot-pass.component';
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
+import {WishlistComponent} from './components/wishlist/wishlist.component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,6 @@ export const routes: Routes = [
     { path: 'cart', component: CartComponent },
   { path: 'payments', component: PaymentsComponent },
   { path: 'detail_product/:id/:colorId/:sizeId', component: DetailProductComponent },
-
+  { path: 'wishlist', component: WishlistComponent }
 
 ];
