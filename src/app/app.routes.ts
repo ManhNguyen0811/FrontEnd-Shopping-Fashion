@@ -8,7 +8,6 @@ import { SigninComponent } from './components/signin/signin.component';
 import { ForgotPassComponent } from './components/forgot-pass/forgot-pass.component';
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
-import {AddressComponent} from './components/address/address.component';
 import {AddressListComponent} from './components/address-list/address-list.component';
 import {ProfileComponent} from './components/profile/profile.component';
 

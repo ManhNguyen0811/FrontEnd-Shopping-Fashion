@@ -4,6 +4,7 @@ import {AddressService} from '../../services/address/address.service';
 import {OrderService} from '../../services/orders/order.service';
 import {CurrencyPipe} from '@angular/common';
 import {Order} from '../../model/order/order';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-payments',
@@ -23,6 +24,10 @@ export class PaymentsComponent implements OnInit {
   totalPrice: number = 0
   totalQty: number = 0
 
+  // orderForm: FormGroup;
+  // shippingMethods = ['Giao tận nơi', 'Lấy tại cửa hàng'];
+  // paymentMethods = ['Thanh toán khi nhận hàng', 'VNPay'];
+
 
   constructor(
     private addressService: AddressService,
@@ -31,6 +36,9 @@ export class PaymentsComponent implements OnInit {
     private route: Router
   ) {
   }
+
+
+
 
   ngOnInit() {
     this.router.params.subscribe(params => {

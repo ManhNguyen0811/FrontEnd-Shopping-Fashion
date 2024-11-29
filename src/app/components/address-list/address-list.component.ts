@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {Address} from '../../model/address/address';
 
 
+
 @Component({
   selector: 'app-address-list',
   standalone: true,
@@ -17,13 +18,26 @@ export class AddressListComponent implements OnInit {
   addressForm: FormGroup;
   isModalOpen = false;
   isEditMode = false;
-  addresses: Address[] = [];
+
   currentAddressId: number | null = null;
 
+  address: any = {
+    city: '',
+    ward: '',
+    street: '',
+    isDefault: false,
+    user: {
+      id: 1
+    }
+  };
 
-  userId: number = 1;
+
+
 
   constructor(private addressService: AddressService, private fb: FormBuilder) {
+
+
+
 
     this.addressForm = this.fb.group({
 
@@ -42,9 +56,10 @@ export class AddressListComponent implements OnInit {
   }
 
   fetchAddresses(): void {
-    this.addressService.getAddressesByUserId(this.userId).subscribe(
+    this.addressService.getAddressesByUserId(this.address).subscribe(
       (data) => {
-        this.addresses = data;
+        this.address = data;
+        console.log("log test" + data)
       },
       (error) => {
         console.error('Lỗi khi lấy danh sách địa chỉ:', error);
@@ -73,6 +88,7 @@ export class AddressListComponent implements OnInit {
     if (this.addressForm.valid) {
       const addressData = this.addressForm.value;
       // addressData.userId = this.userId;
+
       addressData.userId = 1;
 
       if (addressData.isDefault === undefined) {
@@ -82,14 +98,16 @@ export class AddressListComponent implements OnInit {
       if (this.isEditMode) {
         this.addressService.updateAddress(this.currentAddressId!, addressData).subscribe(() => {
           this.fetchAddresses();
+
           this.closeModal();
         });
       } else {
 
-        addressData.userId = this.userId;
+        addressData.userId = this.address;
         this.addressService.createAddress(addressData).subscribe(() => {
 
           this.fetchAddresses();
+          console.log("error:  ",+addressData)
           this.closeModal();
         },
           error => {
@@ -112,4 +130,5 @@ export class AddressListComponent implements OnInit {
   private getCurrentUserId() {
 
   }
+
 }

@@ -35,13 +35,13 @@ export class AddressService {
   }
 
 
-  createAddress(address: Address): Observable<Address> {
-    console.log(address);
-    return this.http.post<Address>(this.apiUrl, address);
+  createAddress(address: any): Observable<any> {
+    console.log("log arderr:   "+address);
+    return this.http.post<any>(this.apiUrl, address);
   }
 
-  updateAddress(id: number, address: Address): Observable<Address> {
-    return this.http.put<Address>(`${this.apiUrl}/${id}`, address);
+  updateAddress(id: number, address: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${id}`, address);
   }
 
 

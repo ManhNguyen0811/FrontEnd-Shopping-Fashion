@@ -16,7 +16,6 @@ import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ProfileComponent} from './components/profile/profile.component';
-import {AddressComponent} from './components/address/address.component';
 import {AddressListComponent} from './components/address-list/address-list.component';
 
 @Component({
