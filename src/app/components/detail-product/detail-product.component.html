@@ -147,7 +147,7 @@
             <div class="detail-product-qty">
               <div class="input-group mb-3">
                 <span class="input-group-text" (click)="activeMinus()"><i class="fa-solid fa-minus"></i></span>
-                <input type="text" [(ngModel)]="activeQty" (input)="checkQty()">
+                <input type="text" [(ngModel)]="activeQty" (blur)="validateQty()"  (keypress)="allowOnlyNumbers($event)"  >
                 <span class="input-group-text" (click)="activeAdd()"><i class="fa-solid fa-plus"></i></span>
               </div>
             </div>
@@ -159,7 +159,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 30px;">
                                 <span
                                   style="padding-top: -20px;font-size: 14px;font-style: italic;font-weight: 500;color: #cecab3;">
-                                    Tình trạng: <span style="color: #a2c8e2;">Còn Hàng</span></span>
+                                    Tình trạng: <span style="color: #a2c8e2;">{{qtyInStock}}</span></span>
                 </div>
 
               </div>
@@ -167,7 +167,7 @@
           </div>
 
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-          {{skuId}} {{activeQty}}
+<!--          {{skuId}} {{activeQty}}-->
 
             <div class="detail-product-btnAddtoCart" (click)="addToCart(1,skuId,activeQty)" >
               <div class="btnAddtoCart slide_leftbtnAddtoCart">THÊM VÀO GIỎ HÀNG</div>

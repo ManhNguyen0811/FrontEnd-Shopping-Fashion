@@ -38,6 +38,7 @@ export class DetailProductComponent implements OnInit {
 
   colorName : string = "";
   sizeName : string = "";
+  qtyInStock: number = 0;
   productId?: number;
   sizeId?: number;
   colorId?: number;
@@ -150,6 +151,7 @@ export class DetailProductComponent implements OnInit {
         this.originalPrice = sku.originalPrice
         this.salePrice = sku.salePrice
         this.skuId = sku.id
+        this.qtyInStock =  sku.qtyInStock
         // console.log(`Original price for size ID ${idsize} and color ID ${idcolor} is: originalPrice:
         //  ${sku.originalPrice}  salePrice : ${sku.salePrice}`);
         return; // Thoát ngay sau khi tìm thấy
@@ -275,10 +277,10 @@ export class DetailProductComponent implements OnInit {
   }
 
 
-  activeQty: number = 0;
+  activeQty: number = 1;
   activeMinus() {
-    if (this.activeQty <= 0) {
-      this.activeQty = 0;
+    if (this.activeQty == 1) {
+      this.activeQty = 1;
     } else {
       this.activeQty--;
     }
@@ -287,12 +289,47 @@ export class DetailProductComponent implements OnInit {
   activeAdd() {
     this.activeQty++;
   };
-  checkQty() {
+  validateQty(): void {
+    //@ts-ignore
+    if (this.activeQty === '' || this.activeQty === null || this.activeQty === undefined) {
+      this.message = 'Số lượng không được để trống!';
+      this.activeQty = 1; // Đặt giá trị mặc định
+      return;
+    }
+    //@ts-ignore
+    if (this.activeQty === "" ||!this.activeQty || this.activeQty <= 0) {
+      this.message = 'Số lượng phải lớn hơn 0!';
+      this.showSuccessMessage = true;
+      setTimeout(() => {
+        this.showSuccessMessage = false;
+      }, 1000);
+      this.activeQty = 1; // Tự động đặt về 1 nếu không hợp lệ
+      return;
+    }
+    this.checkStock()
+  }
 
-    if (this.activeQty < 0) {
-      this.activeQty = 0;
+  checkStock(): void {
+    if (this.activeQty > this.qtyInStock) {
+      this.message = "Số lượng nhập vượt quá số lượng trong kho.";
+      this.showSuccessMessage = true;
+
+      // Hiển thị thông báo trong 1 giây
+      setTimeout(() => {
+        this.showSuccessMessage = false;
+      }, 1000);
+
+      // Reset số lượng nhập về 1
+      this.activeQty = 1;
     }
   }
 
+  allowOnlyNumbers(event: KeyboardEvent): void {
+    const charCode = event.key.charCodeAt(0);
 
+    // Chặn ký tự không phải số (cho phép phím điều hướng như Backspace, Delete)
+    if ((charCode < 48 || charCode > 57) && charCode !== 8) {
+      event.preventDefault();
+    }
+  }
 }
