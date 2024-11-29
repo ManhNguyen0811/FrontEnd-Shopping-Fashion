@@ -24,6 +24,7 @@ export const routes: Routes = [
     { path: 'cart', component: CartComponent },
   {path: 'wishlist', component: WishlistComponent },
   { path: 'payments', component: PaymentsComponent },
+  { path: 'payments/:totalPrice/:totalQty', component: PaymentsComponent },
   { path: 'detail_product/:productId/:colorId/:sizeId', component: DetailProductComponent },
 
 
