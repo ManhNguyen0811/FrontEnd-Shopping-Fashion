@@ -28,8 +28,8 @@
                              *ngFor="let listCartItem of listCartItem ">
                             <div class="row" style="padding: 10px;">
                                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3" style="width: 180px;">
-                                    <div class="img-product-cart">
-                                        <img [src]="'assets/product_img/'+ listCartItem.productImage" alt="">
+                                    <div class="img-product-cart" >
+                                        <img [src]="'assets/product_img/'+ listCartItem.productImage" alt=""  [routerLink]="['/detail_product', listCartItem.productId, listCartItem.skuResponse.color.id,  listCartItem.skuResponse.size.id]">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 col-xl-9" style="width: 615px;  ">
@@ -52,11 +52,10 @@
                                                 <div class="col-7" style="padding-top: 10px;margin-left: 30px;">
                                                     <div class="qty-product-cart">
                                                         <div class="input-group mb-3">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-minus"></i></span>
-                                                            <input type="text" [(ngModel)]="listCartItem.quantity" (blur)="updateQty(listCartItem.id,listCartItem.quantity)">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-plus"></i></span>
+                                                          <span class="input-group-text" (click)="activeMinus(listCartItem)"><i class="fa-solid fa-minus"></i></span>
+                                                          <input type="text" [(ngModel)]="listCartItem.quantity" (blur)="updateQty(listCartItem.id, listCartItem.quantity)">
+                                                          <span class="input-group-text" (click)="activeAdd(listCartItem)"><i class="fa-solid fa-plus"></i></span>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -157,7 +156,7 @@
                                     <div class="col-12">
                                         <div class="btnBuyCart slide_leftbtnBuyCart"
                                              [routerLink]="['/payments', totalPrice,totalQty]">
-                                        >MUA NGAY</div>
+                                        MUA NGAY</div>
                                     </div>
                                     <p></p>
                                     <div class="col-5">

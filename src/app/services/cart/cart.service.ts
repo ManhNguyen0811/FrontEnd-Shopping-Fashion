@@ -28,11 +28,6 @@ export class CartService {
   }
 
   updateQty(cartId : number, qtyNew : number): Observable<ArrayBuffer>   {
-
-
-
-
-
    return this.http.put<ArrayBuffer>(`${this.urlApi}/cart?cartId=${cartId}&newQuantity=${qtyNew} `,{}).pipe(
      catchError((error) =>{
        console.error('Lỗi khi cập nhật số lượng:', error);

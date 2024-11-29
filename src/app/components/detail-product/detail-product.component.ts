@@ -86,9 +86,12 @@ export class DetailProductComponent implements OnInit {
     // confirm("userId: "+userId +"skuId: "+cartDTO.skuId+ "quantity: "+cartDTO.quantity)
     this.cartService.addToCart(userId, cartDTO).subscribe(
       (response) => {
+        this.cartService.getTotalItemUrl(userId).subscribe(() =>{
+          console.log("sknnhhuhbihbb")
+        })
         this.message = "Thêm Cart Thành Công"
         this.showSuccessMessage = true;
-        // this.cdr.detectChanges();
+
         setTimeout(() => {
           this.getTotalItems(1)
           this.showSuccessMessage = false;

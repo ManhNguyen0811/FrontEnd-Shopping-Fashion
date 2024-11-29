@@ -45,6 +45,7 @@
     background-color: rgb(255, 255, 255,0.85);
 }
 .img-product-cart img{
+  transition: transform 0.3s ease;
     border-radius: 5px;
     width: 155px;
     height: 160px;
@@ -213,4 +214,10 @@ font-size: 20px;
   width: auto;
   z-index: 9999;
 }
+.img-product-cart img:hover{
+  cursor: pointer; /* Chuyển con trỏ thành bàn tay khi hover */
+  transform: scale(0.9);
+
+}
+
 

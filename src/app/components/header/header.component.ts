@@ -19,7 +19,7 @@ import {CartService} from '../../services/cart/cart.service';
 })
 export class HeaderComponent implements OnInit {
   categoryList: Category[] = [];
-totalItems?: number;
+totalItems: number = 0
   products?: Product[];
   totalPages?: number;
 
