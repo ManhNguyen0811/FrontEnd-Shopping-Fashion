@@ -19,7 +19,7 @@ import {CartDTO} from '../../model/cart/CartDTO';
 })
 export class CartComponent implements OnInit {
 
-  userID : number  =1
+  userID : number  = 1
 
 
   showSuccessMessage: boolean = false;
@@ -36,8 +36,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.loadCart(this.userID)
-console.log("listCartItem: "+ this.listCartItem)
-
+    console.log(this.listCartItem)
   }
 
 

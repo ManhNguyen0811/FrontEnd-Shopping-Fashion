@@ -22,11 +22,8 @@
     "@angular/platform-server": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.11",
-<<<<<<< HEAD
     "@auth0/angular-jwt": "^5.2.0",
-=======
     "@googlemaps/js-api-loader": "^1.16.8",
->>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
     "angular-font-awesome": "^3.1.2",
     "aos": "^2.3.4",
     "boostrap": "^2.0.0",

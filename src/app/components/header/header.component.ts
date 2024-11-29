@@ -7,14 +7,10 @@ import {Category} from '../../model/category';
 import {Product} from '../../model/product';
 import {ProductsList} from '../../model/Products';
 import {ProductService} from '../../services/product/product.service';
-<<<<<<< HEAD
 import {TokenService} from '../../services/token/token.service';
 import {UserService} from '../../services/user/user.service';
 import {UserResponse} from '../../responses/user/user.response';
-
-=======
-import {CartService} from '../../services/cart/cart.service';
->>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
+import { CartService } from '../../services/cart/cart.service';
 
 
 @Component({
@@ -26,37 +22,33 @@ import {CartService} from '../../services/cart/cart.service';
 })
 export class HeaderComponent implements OnInit {
   categoryList: Category[] = [];
-totalItems: number = 0
+  totalItems: number = 0
   products?: Product[];
   totalPages?: number;
 
-  userResponse?:UserResponse | null;
+  userResponse?: UserResponse | null;
   isPopoverOpen = false;
   activeNavItem: number = 0;
 
   constructor(
     private categoryService: CategoryService,
-<<<<<<< HEAD
     private userService: UserService,
     private tokenService: TokenService,
-    private router: Router
-=======
+    private router: Router,
     private cartService: CartService,
->>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
+  ) {
+  }
 
-  ) {}
   ngOnInit(): void {
     this.getCategoryAll();
-<<<<<<< HEAD
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
 
-=======
     this.getTotalItems(1)
-    console.log("total" +  this.totalItems)
->>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
+    console.log(this.totalItems)
   }
+
   getCategoryAll(): void {
-    this.categoryService.getCategoryAll().subscribe((allCategory: Category[])=>{
+    this.categoryService.getCategoryAll().subscribe((allCategory: Category[]) => {
       this.categoryList = allCategory;
     })
   }
@@ -76,11 +68,9 @@ totalItems: number = 0
     });
   }
 
-  }
-
   handleItemClick(index: number): void {
     //alert(`Clicked on "${index}"`);
-    if(index === 0) {
+    if (index === 0) {
       debugger
       this.router.navigate(['/user-profile']);
     } else if (index === 2) {
@@ -91,5 +81,5 @@ totalItems: number = 0
     this.isPopoverOpen = false; // Close the popover after clicking an item
   }
 
-
+}
 
