@@ -15,6 +15,8 @@ import {log} from 'node:util';
 import {CartService} from '../../services/cart/cart.service';
 import {CartDTO} from '../../model/cart/CartDTO';
 import { ChangeDetectorRef } from '@angular/core';
+import {WishlistDTO} from '../../model/wishlist/WishlistDTO';
+import {WishlistService} from '../../services/wishlist/wishlist.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -48,6 +50,7 @@ export class DetailProductComponent implements OnInit {
 
 
   constructor(private detailProductService: DetailProductService,
+              private wishlistService: WishlistService,
               private cartService: CartService,
               private cdRef: ChangeDetectorRef,
               private router: ActivatedRoute,
@@ -70,6 +73,32 @@ export class DetailProductComponent implements OnInit {
     });
   }
 
+  addToWishlist(userId: number, skuId: number | undefined){
+    const wishlistDTO = {skuId: skuId};
+    this.wishlistService.addToWishlist(userId, wishlistDTO).subscribe(
+      (response) => {
+        this.message = "Thêm Wishlist Thành Công"
+        this.showSuccessMessage = true;
+
+        setTimeout(() => {
+          this.getTotalItems(userId)
+          this.showSuccessMessage = false;
+        }, 1000);
+
+
+      },(error) => {
+        this.message = "Thêm Wishlist Thất Bại "
+        this.showSuccessMessage = true;
+        // this.cdr.detectChanges();
+        setTimeout(() => {
+          this.getTotalItems(userId)
+          this.showSuccessMessage = false;
+        }, 1000);
+        console.log(error,"Thêm thất bại.");
+      }
+    )
+
+  }
 
   addToCart(userId: number, skuId: number | undefined, quantity: number){
     if (quantity == 0 || quantity <= 0 || isNaN(quantity)){

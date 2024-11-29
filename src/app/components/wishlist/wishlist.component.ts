@@ -24,7 +24,7 @@ export class WishlistComponent implements OnInit {
   listWishlistResponse?: WishlistResponse;
   listWishlistItem?: WishlistItem[];
 
-  userid : number = 1
+  userid : number = 2
   constructor(private WishlistService: WishlistService) { }
 
   ngOnInit() {

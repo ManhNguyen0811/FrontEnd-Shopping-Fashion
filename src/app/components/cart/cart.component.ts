@@ -19,7 +19,7 @@ import {CartDTO} from '../../model/cart/CartDTO';
 })
 export class CartComponent implements OnInit {
 
-  userID : number  =1
+  userID : number  =2
 
 
   showSuccessMessage: boolean = false;
