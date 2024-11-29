@@ -15,6 +15,9 @@ import { OTPComponent } from './components/OTP/OTP.component';
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ProfileComponent} from './components/profile/profile.component';
+import {AddressListComponent} from './components/address-list/address-list.component';
+import {WishlistComponent} from './components/wishlist/wishlist.component';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +26,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     RouterLink,
     HeaderComponent,SigninComponent,OTPComponent,
     FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,ReactiveFormsModule
-   , PaymentsComponent
+   , PaymentsComponent,ProfileComponent,AddressListComponent, WishlistComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

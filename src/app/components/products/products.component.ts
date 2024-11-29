@@ -1,15 +1,16 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 
 
-import {RouterLink} from '@angular/router';
+import {Route, RouterLink} from '@angular/router';
 import {Product} from '../../model/product';
 import {CommonModule} from '@angular/common';
 import {DetailProductComponent} from '../detail-product/detail-product.component';
-
+import { Router } from '@angular/router';
 import {ProductService} from '../../services/product/product.service';
 import {ProductsList} from '../../model/Products';
 import {CategoryService} from '../../services/category/category.service';
 import {FormsModule} from '@angular/forms';
+import {CartService} from '../../services/cart/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -31,9 +32,12 @@ export class ProductsComponent implements OnInit {
   sortBy: string = 'createAt';
   sortDirection: string = 'asc';
   keyword: string = ''
+  sortSelection: any = { sortBy: 'name', sortDirection: 'desc' };
 
   constructor(private productService: ProductService,
               private categoryService: CategoryService,
+              private router: Router,
+
   ) {
   }
 
@@ -45,6 +49,10 @@ export class ProductsComponent implements OnInit {
       this.loadProducts(this.categoryId);
     });
   }
+
+
+
+
 
   loadProducts(categoryId: number): void {
     // @ts-ignore
@@ -66,11 +74,14 @@ export class ProductsComponent implements OnInit {
       this.keyword = keyword;
       this.loadProducts(this.categoryId);
   }
-  setSortBy(sortBy : string,byDerection : string){
-    this.sortBy = sortBy;
-    this.sortDirection = byDerection;
-    this.loadProducts(this.categoryId);
+  setSortBy(selection: { sortBy: string, sortDirection: string }) {
+    const { sortBy, sortDirection } = selection;
+    this.sortBy = sortBy; // Thuộc tính bạn muốn sắp xếp
+    this.sortDirection = sortDirection; // Hướng sắp xếp (asc hoặc desc)
+    this.loadProducts(this.categoryId); // Gọi lại phương thức loadProducts với categoryId
   }
+
+
 
   getUniqueColors(skus: any[]): any[] {
     const uniqueColors = new Map();

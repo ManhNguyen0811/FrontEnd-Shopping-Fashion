@@ -1,3 +1,7 @@
+<div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+  {{message}}
+</div>
+
 <div class="container" style="padding-top:90px;">
   <div class="textLink" style="margin-left: 40px; padding: 10px;"><span style="
       font-family:  'Kanit', sans-serif; font-size: 17px;font-weight: 500;
@@ -14,7 +18,7 @@
     <div class="col-sm-1 col-md-1 col-lg-1 col-xl-2 " style="background-color: rgb(255, 255, 255);width: 140px;">
       <div class="detail-pr">
         <div class="row" style=" height: 420px;overflow-y: auto;   scrollbar-width: none; ">
-          <div class="col-12" *ngFor="let imgList of  productImagesList">
+          <div class="col-12" *ngFor="let imgList of  productImagesList"  (click)="onImageClick(imgList)">
             <img [src]="'assets/product_img/' + imgList.imageUrl" alt="">
           </div>
 
@@ -37,21 +41,21 @@
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="detail-product-price">
-            <div class="row" *ngIf="dataSkus?.originalPrice !== dataSkus?.salePrice">
+            <div class="row" *ngIf="originalPrice !== salePrice">
 
               <div class="col-2">
                 <p> <span [ngStyle]="{'text-decoration': 'line-through', 'color': '#8ba1b0','font-size' :'18px'}">
-                                  {{ dataSkus?.originalPrice | currency : "VND" : "" }}
+                                  {{ originalPrice | currency : "VND" : "" }}
                                 </span></p>
               </div>
               <div class="col-3">
 
-                <p><span>{{ dataSkus?.salePrice | currency : "VND" : "" }}</span>
+                <p><span>{{ salePrice | currency : "VND" : "" }}</span>
                   <span style="font-style: italic; font-size: 18px;">Vnđ</span></p>
               </div>
             </div>
-            <div class="row" *ngIf="dataSkus?.originalPrice === dataSkus?.salePrice">
-              <p> {{ dataSkus?.originalPrice | currency : "VND" : "" }}
+            <div class="row" *ngIf="originalPrice === salePrice">
+              <p> {{ originalPrice | currency : "VND" : "" }}
                 <span style="font-style: italic; font-size: 18px;">Vnđ</span>
               </p>
             </div>
@@ -64,7 +68,7 @@
             <div class="detail-product-color">
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 30px;">
-                  <p>Màu sắc : Đen </p>
+                  <p>Màu sắc : {{colorName}} </p>
 
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -74,7 +78,8 @@
 
                       <div class="row" style="margin-left: -10px;">
                         <div class="col-3 detail-product-colorAll activeBoderSize" style="width: 50px;"
-                             *ngFor="let btnColor of getUniqueColors(detailProductList?.skus); let i = index" (click)="setActiveColor(i,btnColor.id)"
+                             *ngFor="let btnColor of getUniqueColors(detailProductList?.skus); let i = index"
+                             (click)="setActiveColor(i,btnColor.id)"
                              [ngClass]="{'activeBoderColor' :activeIndexColor === i }"
                         >
                           <span [style.background-image]="'url(assets/color_img/' + btnColor.value_img + ')'">
@@ -97,7 +102,7 @@
             <div class="detail-product-size">
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 30px;">
-                  <p>Kích cỡ : M </p>
+                  <p>Kích cỡ : {{sizeName}} </p>
 
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -109,7 +114,7 @@
 
                         <div class="col-3 detail-product-sizeAll" style="width: 50px;"
                              *ngFor="let btnSize of getUniqueSizes(detailProductList?.skus);let i = index"
-                             (click)="setActiveSize(i)"
+                             (click)="setActiveSize(i,btnSize.id)"
                              [ngClass]="{'activeBoderSize' :activeIndexSize === i}"
                         >
 
@@ -142,7 +147,7 @@
             <div class="detail-product-qty">
               <div class="input-group mb-3">
                 <span class="input-group-text" (click)="activeMinus()"><i class="fa-solid fa-minus"></i></span>
-                <input type="text" [(ngModel)]="activeQty" (input)="checkQty()">
+                <input type="text" [(ngModel)]="activeQty" (blur)="validateQty()"  (keypress)="allowOnlyNumbers($event)"  >
                 <span class="input-group-text" (click)="activeAdd()"><i class="fa-solid fa-plus"></i></span>
               </div>
             </div>
@@ -154,7 +159,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 30px;">
                                 <span
                                   style="padding-top: -20px;font-size: 14px;font-style: italic;font-weight: 500;color: #cecab3;">
-                                    Tình trạng: <span style="color: #a2c8e2;">Còn Hàng</span></span>
+                                    Tình trạng: <span style="color: #a2c8e2;">{{qtyInStock === 0 ?  "Hết Hàng" : qtyInStock}}</span></span>
                 </div>
 
               </div>
@@ -162,7 +167,9 @@
           </div>
 
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="detail-product-btnAddtoCart">
+<!--          {{skuId}} {{activeQty}}-->
+
+            <div class="detail-product-btnAddtoCart" (click)="addToCart(1,skuId,activeQty)" >
               <div class="btnAddtoCart slide_leftbtnAddtoCart">THÊM VÀO GIỎ HÀNG</div>
 
             </div>

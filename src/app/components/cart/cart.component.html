@@ -1,3 +1,6 @@
+<!--<div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">-->
+<!--  {{message}}-->
+<!--</div>-->
 
 
 <div class="container-fluid">
@@ -21,39 +24,38 @@
                     <div class="row">
 
                         <!-- render product cart -->
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 product-cartOne">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 product-cartOne"
+                             *ngFor="let listCartItem of listCartItem ">
                             <div class="row" style="padding: 10px;">
                                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3" style="width: 180px;">
-                                    <div class="img-product-cart">
-                                        <img src="../../../assets/product_img/BLOUSON38DARKBROWN.jpg" alt="">
+                                    <div class="img-product-cart" >
+                                        <img [src]="'assets/product_img/'+ listCartItem.productImage" alt=""  [routerLink]="['/detail_product', listCartItem.productId, listCartItem.skuResponse.color.id,  listCartItem.skuResponse.size.id]">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 col-xl-9" style="width: 615px;  ">
                                     <div class="row">
                                         <div
                                             class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 name-product-cart">
-                                            <span>Áo Khoác Blouson Vải Brushed Jersey Kéo Khóa Blouson Vải Brushed
-                                                Jersey Kéo Khóa</span>
+                                            <span>{{listCartItem.productName}}</span>
                                         </div>
                                         <div
                                             class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 size-color-product-cart">
                                             <div class="row" style="margin-top: 10px;">
                                                 <div class="col-4  ">
                                                     <span style="color: #2a2a2a;">Kích Thước : <span
-                                                            style="font-weight: bold;font-size: 18px;">L</span>
+                                                            style="font-weight: bold;font-size: 18px;">{{listCartItem.skuResponse.size.name}}</span>
                                                     </span><br>
                                                     <span style="color: #2a2a2a;">Màu sắc : <span
-                                                            style="font-weight: bold;font-size: 16px;">Đỏ</span> </span>
+                                                            style="font-weight: bold;font-size: 16px;">{{listCartItem.skuResponse.color.name}}</span> </span>
 
                                                 </div>
                                                 <div class="col-7" style="padding-top: 10px;margin-left: 30px;">
                                                     <div class="qty-product-cart">
                                                         <div class="input-group mb-3">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-minus"></i></span>
-                                                            <input type="text" value="0">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-plus"></i></span>
+                                                          <span class="input-group-text" (click)="activeMinus(listCartItem)"><i class="fa-solid fa-minus"></i></span>
+                                                          <input type="text" [(ngModel)]="listCartItem.quantity" (blur)="updateQty(listCartItem.id, listCartItem.quantity)">
+                                                          <span class="input-group-text" (click)="activeAdd(listCartItem)"><i class="fa-solid fa-plus"></i></span>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -69,7 +71,7 @@
                                                     style="padding-top: 15px;padding-left: 20px; ">
                                                     <span style="color: #2a2a2a;">Giá:
                                                         <span style="padding-left: 3px;font-size: 16px;color: #82bad1;">
-                                                            12,000,000 </span>
+                                                            {{listCartItem.price | currency : "VND" : ""}} </span>
                                                         <span style="font-size: 10px;color: #2a2a2a;">Vnđ </span>
 
                                                     </span>
@@ -79,7 +81,7 @@
                                                     <span style="   width: 200px;"><span style="color: #2a2a2a;">Tổng:
                                                         </span>
                                                         <span
-                                                            style="padding-left: 3px;font-size: 18px;color: #e31732;">122,000,000
+                                                            style="padding-left: 3px;font-size: 18px;color: #e31732;">{{listCartItem.price  * listCartItem.quantity | currency : "VND" : ""}}
                                                         </span>
                                                         <span style="font-size: 10px;color: #2a2a2a; ">Vnđ
                                                         </span></span>
@@ -92,220 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 product-cartOne">
-                            <div class="row" style="padding: 10px;">
-                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3" style="width: 180px;">
-                                    <div class="img-product-cart">
-                                        <img src="../../../assets/product_img/BLOUSON08DARKGREY.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 col-xl-9" style="width: 615px;  ">
-                                    <div class="row">
-                                        <div
-                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 name-product-cart">
-                                            <span>Áo Khoác Blouson Vải Brushed Jersey Kéo Khóa Blouson Vải Brushed
-                                                Jersey Kéo Khóa</span>
-                                        </div>
-                                        <div
-                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 size-color-product-cart">
-                                            <div class="row" style="margin-top: 10px;">
-                                                <div class="col-4  ">
-                                                    <span style="color: #2a2a2a;">Kích Thước : <span
-                                                            style="font-weight: bold;font-size: 18px;">L</span>
-                                                    </span><br>
-                                                    <span style="color: #2a2a2a;">Màu sắc : <span
-                                                            style="font-weight: bold;font-size: 16px;">Đỏ</span> </span>
 
-                                                </div>
-                                                <div class="col-7" style="padding-top: 10px;margin-left: 30px;">
-                                                    <div class="qty-product-cart">
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-minus"></i></span>
-                                                            <input type="text" value="0">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-plus"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 price-product-cart"
-                                            style="margin-top: -7px;">
-                                            <div class="row">
-                                                <div class="col-4 removeCart" style="padding-top: 15px;">
-                                                    <a href=""> Remove</a>
-                                                </div>
-                                                <div class="col-4 priceInCart-product-cart"
-                                                    style="padding-top: 15px;padding-left: 20px; ">
-                                                    <span style="color: #2a2a2a;">Giá:
-                                                        <span style="padding-left: 3px;font-size: 16px;color: #82bad1;">
-                                                            12,000,000 </span>
-                                                        <span style="font-size: 10px;color: #2a2a2a;">Vnđ </span>
-
-                                                    </span>
-                                                </div>
-                                                <div class="col-4 totalOne-product-cart "
-                                                    style="padding-top: 15px;padding-left: 40px; width: 220px;">
-                                                    <span style="   width: 200px;"><span style="color: #2a2a2a;">Tổng:
-                                                        </span>
-                                                        <span
-                                                            style="padding-left: 3px;font-size: 18px;color: #e31732;">122,000,000
-                                                        </span>
-                                                        <span style="font-size: 10px;color: #2a2a2a; ">Vnđ
-                                                        </span></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 product-cartOne">
-                            <div class="row" style="padding: 10px;">
-                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3" style="width: 180px;">
-                                    <div class="img-product-cart">
-                                        <img src="../../../assets/product_img/BLOUSON34BROWN.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 col-xl-9" style="width: 615px;  ">
-                                    <div class="row">
-                                        <div
-                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 name-product-cart">
-                                            <span>Áo Khoác Blouson Vải Brushed Jersey Kéo Khóa Blouson Vải Brushed
-                                                Jersey Kéo Khóa</span>
-                                        </div>
-                                        <div
-                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 size-color-product-cart">
-                                            <div class="row" style="margin-top: 10px;">
-                                                <div class="col-4  ">
-                                                    <span style="color: #2a2a2a;">Kích Thước : <span
-                                                            style="font-weight: bold;font-size: 18px;">L</span>
-                                                    </span><br>
-                                                    <span style="color: #2a2a2a;">Màu sắc : <span
-                                                            style="font-weight: bold;font-size: 16px;">Đỏ</span> </span>
-
-                                                </div>
-                                                <div class="col-7" style="padding-top: 10px;margin-left: 30px;">
-                                                    <div class="qty-product-cart">
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-minus"></i></span>
-                                                            <input type="text" value="0">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-plus"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 price-product-cart"
-                                            style="margin-top: -7px;">
-                                            <div class="row">
-                                                <div class="col-4 removeCart" style="padding-top: 15px;">
-                                                    <a href=""> Remove</a>
-                                                </div>
-                                                <div class="col-4 priceInCart-product-cart"
-                                                    style="padding-top: 15px;padding-left: 20px; ">
-                                                    <span style="color: #2a2a2a;">Giá:
-                                                        <span style="padding-left: 3px;font-size: 16px;color: #82bad1;">
-                                                            12,000,000 </span>
-                                                        <span style="font-size: 10px;color: #2a2a2a;">Vnđ </span>
-
-                                                    </span>
-                                                </div>
-                                                <div class="col-4 totalOne-product-cart "
-                                                    style="padding-top: 15px;padding-left: 40px; width: 220px;">
-                                                    <span style="   width: 200px;"><span style="color: #2a2a2a;">Tổng:
-                                                        </span>
-                                                        <span
-                                                            style="padding-left: 3px;font-size: 18px;color: #e31732;">122,000,000
-                                                        </span>
-                                                        <span style="font-size: 10px;color: #2a2a2a; ">Vnđ
-                                                        </span></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 product-cartOne">
-
-                            <div class="row" style="padding: 10px;">
-                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3" style="width: 180px;">
-                                    <div class="img-product-cart">
-                                        <img src="../../../assets/product_img/BLOUSON38DARKBROWN.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 col-xl-9" style="width: 615px;  ">
-                                    <div class="row">
-                                        <div
-                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 name-product-cart">
-                                            <span>Áo Khoác Blouson Vải Brushed Jersey Kéo Khóa Blouson Vải Brushed
-                                                Jersey Kéo Khóa</span>
-                                        </div>
-                                        <div
-                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 size-color-product-cart">
-                                            <div class="row" style="margin-top: 10px;">
-                                                <div class="col-4  ">
-                                                    <span style="color: #2a2a2a;">Kích Thước : <span
-                                                            style="font-weight: bold;font-size: 18px;">L</span>
-                                                    </span><br>
-                                                    <span style="color: #2a2a2a;">Màu sắc : <span
-                                                            style="font-weight: bold;font-size: 16px;">Đỏ</span> </span>
-
-                                                </div>
-                                                <div class="col-7" style="padding-top: 10px;margin-left: 30px;">
-                                                    <div class="qty-product-cart">
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-minus"></i></span>
-                                                            <input type="text" value="0">
-                                                            <span class="input-group-text"><i
-                                                                    class="fa-solid fa-plus"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 price-product-cart"
-                                            style="margin-top: -7px;">
-                                            <div class="row">
-                                                <div class="col-4 removeCart" style="padding-top: 15px;">
-                                                    <a href=""> Remove</a>
-                                                </div>
-                                                <div class="col-4 priceInCart-product-cart"
-                                                    style="padding-top: 15px;padding-left: 20px; ">
-                                                    <span style="color: #2a2a2a;">Giá:
-                                                        <span style="padding-left: 3px;font-size: 16px;color: #82bad1;">
-                                                            12,000,000 </span>
-                                                        <span style="font-size: 10px;color: #2a2a2a;">Vnđ </span>
-
-                                                    </span>
-                                                </div>
-                                                <div class="col-4 totalOne-product-cart "
-                                                    style="padding-top: 15px;padding-left: 40px; width: 220px;">
-                                                    <span style="   width: 200px;"><span style="color: #2a2a2a;">Tổng:
-                                                        </span>
-                                                        <span
-                                                            style="padding-left: 3px;font-size: 18px;color: #e31732;">122,000,000
-                                                        </span>
-                                                        <span style="font-size: 10px;color: #2a2a2a; ">Vnđ
-                                                        </span></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
 
@@ -327,7 +116,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                                         <span style="padding-right: 45px;">TỔNG TIỀN </span> <span
-                                            style="font-size: 22px;  margin-left: 40px; ">200,000,000 </span> <span
+                                            style="font-size: 22px;  margin-left: 40px; ">{{totalPrice | currency: 'VND' : ''}} </span> <span
                                             style="font-size: 10px;color: #2a2a2a; ">Vnđ
                                         </span>
                                     </div>
@@ -341,7 +130,7 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
                                         style="margin-top: 20px;">
                                         <span>TỔNG SỐ LƯỢNG :</span>
-                                        <span style="font-size: 22px;  margin-left: 34px; margin-right: 5px;"> 3 </span>
+                                        <span style="font-size: 22px;  margin-left: 34px; margin-right: 5px;">{{totalQty}} </span>
                                         <span style="font-size: 18px;color: #82bad1; ">Sản phẩm
                                         </span>
                                     </div>
@@ -351,7 +140,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <span>TỔNG HÓA ĐƠN :</span>
-                                        <span style="font-size: 26px;  margin-left: 30px;color: #00b7ff; ">200,000,000
+                                        <span style="font-size: 26px;  margin-left: 30px;color: #00b7ff; ">{{totalPrice + 20000 | currency : 'VND' :''}}
                                         </span> <span style="font-size: 10px;color: #2a2a2a; ">Vnđ
                                         </span>
                                     </div>
@@ -365,7 +154,9 @@
                             <div class="priceBill">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="btnBuyCart slide_leftbtnBuyCart" routerLink ="/payments">MUA NGAY</div>
+                                        <div class="btnBuyCart slide_leftbtnBuyCart"
+                                             [routerLink]="['/payments', totalPrice,totalQty]">
+                                        MUA NGAY</div>
                                     </div>
                                     <p></p>
                                     <div class="col-5">

@@ -16,7 +16,7 @@
         </div>
         <p></p>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-          <div class="row" style="background-color: rgba(255, 255, 255, 0.8);  width: 800px; 
+          <div class="row" style="background-color: rgba(255, 255, 255, 0.8);  width: 800px;
                                 border-radius: 18px; margin-left: 1px;">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding-left: 24px;">
               <div class="textTitle">
@@ -29,8 +29,19 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding-left: 24px;">
               <div class="row designText ">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <p> <input type="checkbox" name="" id=""> Giao tận nơi</p>
+                <div class="col-xs-12 col -sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label text-success-emphasis" for="flexRadioDefault1">
+                      Giao hàng nhanh
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label text-success-emphasis" for="flexRadioDefault2">
+                      Giao hàng hỏa tốc
+                    </label>
+                  </div>
                   <p style="padding-left: 15px;"> Phí vận chuyển : <span
                       style="color: #00b7ff;font-weight: 500;">50.000</span> Vnđ <br>
                     <span style="font-weight: 500;">Thời gian giao hàng dự kiến TP. Hồ Chí Minh: 2 ngày, các tỉnh miền
@@ -48,6 +59,10 @@
                     <hr>
                   </span>
                 </div>
+<!--                <form [formGroup]="orderForm" (ngSubmit)="createOrder()">-->
+
+
+
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4"
                   style="padding-right: 30px;text-align: center;">
                   <span style="  font-family: 'Kanit', sans-serif; color: #a79898;">CHỌN ĐỊA CHỈ GIAO</span>
@@ -70,7 +85,7 @@
                         <div class="col-xs-7 col-sm-3 col-md-7 col-lg-3 col-xl-7 userAddress">
                           <span>14B Trần Bình Trọng,Trần Bình Trọng,
                             Phường 1, Quận 5, TP.Hồ Chí Minh </span>
-                          <p style="color: #00b7ff;font-weight: 500px;">0987647463</p>
+                          <p style="color: #00b7ff;font-weight: 500;">0987647463</p>
                         </div>
 
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -93,7 +108,7 @@
                         <div class="col-xs-7 col-sm-3 col-md-7 col-lg-3 col-xl-7 userAddress">
                           <span>14B Trần Bình Trọng,Trần Bình Trọng,
                             Phường 1, Quận 5, TP.Hồ Chí Minh </span>
-                          <p style="color: #00b7ff;font-weight: 500px;">0987647463</p>
+                          <p style="color: #00b7ff;font-weight: 500;">0987647463</p>
                         </div>
 
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -116,7 +131,7 @@
                         <div class="col-xs-7 col-sm-3 col-md-7 col-lg-3 col-xl-7 userAddress">
                           <span>14B Trần Bình Trọng,Trần Bình Trọng,
                             Phường 1, Quận 5, TP.Hồ Chí Minh </span>
-                          <p style="color: #00b7ff;font-weight: 500px;">0987647463</p>
+                          <p style="color: #00b7ff;font-weight: 500;">0987647463</p>
                         </div>
 
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -139,7 +154,7 @@
                         <div class="col-xs-7 col-sm-3 col-md-7 col-lg-3 col-xl-7 userAddress">
                           <span>14B Trần Bình Trọng,Trần Bình Trọng,
                             Phường 1, Quận 5, TP.Hồ Chí Minh </span>
-                          <p style="color: #00b7ff;font-weight: 500px;">0987647463</p>
+                          <p style="color: #00b7ff;font-weight: 500;">0987647463</p>
                         </div>
 
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -192,17 +207,17 @@
                 <form>
                   <div class="row form-design">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-                      <label class="form-label fw-bold" for="form1Example1">HỌ VÀ TÊN </label>
+                      <label class="form-label fw-bold" >HỌ VÀ TÊN </label>
                       <input class="form-control " />
 
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-                      <label class="form-label fw-bold" for="form1Example1">SỐ ĐIỆN THOẠI </label>
+                      <label class="form-label fw-bold" >SỐ ĐIỆN THOẠI </label>
                       <input class="form-control " />
 
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4 ">
-                      <label class="form-label fw-bold" for="form1Example2">TỈNH</label>
+                      <label class="form-label fw-bold"  >TỈNH</label>
                       <select class="form-select designAddress" aria-label="Default select example">
                         <option selected>Open this select menu</option>
                         <option value="1">One</option>
@@ -212,7 +227,7 @@
 
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-                      <label class="form-label fw-bold" for="form1Example2">QUẬN </label>
+                      <label class="form-label fw-bold"  >QUẬN </label>
                       <select class="form-select designAddress" aria-label="Default select example">
                         <option selected>Open this select menu</option>
                         <option value="1">One</option>
@@ -221,7 +236,7 @@
                       </select>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-                      <label class="form-label fw-bold" for="form1Example2">PHƯỜNG</label>
+                      <label class="form-label fw-bold"  >PHƯỜNG</label>
                       <select class="form-select designAddress" aria-label="Default select example">
                         <option selected>Open this select menu</option>
                         <option value="1">One</option>
@@ -231,7 +246,7 @@
                     </div>
 
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-                      <label class="form-label fw-bold" for="form1Example1">CHI TIẾT ĐỊA CHỈ </label>
+                      <label class="form-label fw-bold" >CHI TIẾT ĐỊA CHỈ </label>
                       <input class="form-control " />
 
                     </div>
@@ -240,7 +255,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox"
                           style="width: 20px; height: 20px;margin-right: 10px;" />
-                        <label class="form-check-label" for="form1Example3" style="font-size: 18px;padding-top: 4px;">
+                        <label class="form-check-label"  style="font-size: 18px;padding-top: 4px;">
                           Dùng làm địa chỉ thanh toán mặc định.</label>
                       </div>
                     </div>
@@ -278,7 +293,7 @@
               <div class="accordion-body">
                 <div class="row">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-                    <label class="form-label fw-bold" for="form1Example2">THANH TOÁN BẰNG </label>
+                    <label class="form-label fw-bold" >THANH TOÁN BẰNG </label>
                     <select class="form-select designAddress" aria-label="Default select example">
                       <option selected>Thanh toán khi nhận hàng </option>
                       <option value="1"> VN PAY</option>
@@ -343,7 +358,7 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                     <span style="padding-right: 45px;">TỔNG TIỀN </span> <span
-                      style="font-size: 22px;  margin-left: 40px; ">200,000,000 </span> <span
+                      style="font-size: 22px;  margin-left: 40px; ">{{totalPrice | currency : "VND" : ""}} </span> <span
                       style="font-size: 10px;color: #2a2a2a; ">Vnđ
                     </span>
                   </div>
@@ -354,8 +369,14 @@
                     </span>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-top: 20px;">
+                    <span>PHƯƠNG THỨC VẬN CHUYỂN :</span>
+                    <span style="font-size: 22px;  margin-left: 10px; ">20,000 </span> <span
+                    style="font-size: 10px;color: #1c0f0f; ">Vnđ
+                    </span>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-top: 20px;">
                     <span>TỔNG SỐ LƯỢNG :</span>
-                    <span style="font-size: 22px;  margin-left: 34px; margin-right: 5px;"> 3 </span>
+                    <span style="font-size: 22px;  margin-left: 34px; margin-right: 5px;"> {{totalQty}} </span>
                     <span style="font-size: 18px;color: #82bad1; ">Sản phẩm
                     </span>
                   </div>
@@ -364,7 +385,7 @@
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <span>TỔNG HÓA ĐƠN :</span>
-                    <span style="font-size: 26px;  margin-left: 30px;color: #00b7ff; ">200,000,000
+                    <span style="font-size: 26px;  margin-left: 30px;color: #00b7ff; ">
                     </span> <span style="font-size: 10px;color: #2a2a2a; ">Vnđ
                     </span>
                   </div>
@@ -379,7 +400,7 @@
               <div class="priceBill">
                   <div class="row">
                       <div class="col-12">
-                          <div class="btnPayment slide_leftbtnPayment" routerLink ="/payments">THANH TOÁN </div>
+                          <div class="btnPayment slide_leftbtnPayment" routerLink ="createOrder()">THANH TOÁN </div>
                       </div>
                       <p></p>
                       <div class="col-5">

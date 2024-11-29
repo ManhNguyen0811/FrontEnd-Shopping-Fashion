@@ -15,4 +15,11 @@ private apiUrl = `${environment.apiBaseUrl}/api/v1`
   getUrlDetailProduct (idProduct :number,colorId: number,sizeId : number ): Observable<DetailProduct>{
   return this.http.get<DetailProduct>(`${this.apiUrl}/products/${idProduct}?colorId=${colorId}&sizeId=${sizeId}`);
   }
+
+
+  getPriceBySizeAndColor(sizeId: number, colorId: number): Observable<any> {
+    const url = `${this.apiUrl}?sizeId=${sizeId}&colorId=${colorId}`;
+    return this.http.get<any>(url);
+  }
+
 }

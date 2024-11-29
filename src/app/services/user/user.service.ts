@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Injectable, Inject } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,11 +9,19 @@ import { HttpUtilService } from '../http.util.service';
 import { UserResponse } from '../../responses/user/user.response';
 import { UpdateUserDTO } from '../../dtos/user/update.user.dto';
 import { DOCUMENT } from '@angular/common';
+=======
+import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {User} from '../../model/user/user';
+import {environment} from '../../../environments/environment';
+import {Observable} from 'rxjs';
+>>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+<<<<<<< HEAD
   private apiRegister = `${environment.apiBaseUrl}/api/v1/users/register`;
   private apiLogin = `${environment.apiBaseUrl}/api/v1/users/login`;
   private apiUserDetail = `${environment.apiBaseUrl}/api/v1/users/details`;
@@ -118,6 +127,14 @@ export class UserService {
   checkPhone(phone: string): Observable<boolean> {
     const params = new HttpParams().set('phone', phone);
     return this.http.get<boolean>(this.apiCheckPhone, { params });
+=======
+  private apiUrl = `http://localhost:8080/api/v1/users`;
+  constructor(private http: HttpClient) { }
+
+  getUserProfile(): Observable<User> {
+
+    return this.http.get<User>(`${this.apiUrl}/profile`);
+>>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
   }
 
 }

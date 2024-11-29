@@ -7,10 +7,14 @@ import {Category} from '../../model/category';
 import {Product} from '../../model/product';
 import {ProductsList} from '../../model/Products';
 import {ProductService} from '../../services/product/product.service';
+<<<<<<< HEAD
 import {TokenService} from '../../services/token/token.service';
 import {UserService} from '../../services/user/user.service';
 import {UserResponse} from '../../responses/user/user.response';
 
+=======
+import {CartService} from '../../services/cart/cart.service';
+>>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
 
 
 @Component({
@@ -22,7 +26,7 @@ import {UserResponse} from '../../responses/user/user.response';
 })
 export class HeaderComponent implements OnInit {
   categoryList: Category[] = [];
-
+totalItems: number = 0
   products?: Product[];
   totalPages?: number;
 
@@ -32,15 +36,24 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
+<<<<<<< HEAD
     private userService: UserService,
     private tokenService: TokenService,
     private router: Router
+=======
+    private cartService: CartService,
+>>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
 
   ) {}
   ngOnInit(): void {
     this.getCategoryAll();
+<<<<<<< HEAD
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
 
+=======
+    this.getTotalItems(1)
+    console.log("total" +  this.totalItems)
+>>>>>>> d6a1655a657aa7d7f700285ce6a09547865c4b8c
   }
   getCategoryAll(): void {
     this.categoryService.getCategoryAll().subscribe((allCategory: Category[])=>{
@@ -51,6 +64,18 @@ export class HeaderComponent implements OnInit {
 
   onCategorySelect(id: number): void {
     this.categoryService.setCategoryId(id);
+
+  }
+
+  getTotalItems(userId: number): void {
+    this.cartService.getTotalItemUrl(userId).subscribe(response => {
+      // Lấy số totalItem từ API và gán vào biến totalItem
+      this.totalItems = response.totalItem;
+    }, error => {
+      console.error('Lỗi khi lấy dữ liệu từ API:', error);
+    });
+  }
+
   }
 
   handleItemClick(index: number): void {
@@ -67,4 +92,4 @@ export class HeaderComponent implements OnInit {
   }
 
 
-}
+
