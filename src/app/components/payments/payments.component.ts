@@ -1,62 +1,73 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AddressService} from '../../services/address/address.service';
 import {OrderService} from '../../services/orders/order.service';
+import {CurrencyPipe} from '@angular/common';
+import {Order} from '../../model/order/order';
 
 @Component({
   selector: 'app-payments',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    CurrencyPipe
   ],
   templateUrl: './payments.component.html',
   styleUrl: './payments.component.scss'
 })
 export class PaymentsComponent implements OnInit {
+
+  userId: number = 1; // Lấy userId từ nơi khác, ví dụ từ session, login, etc.
+  order: Order | null = null;
   list: any[] = []
+  totalPrice: number = 0
+  totalQty: number = 0
+
+
   constructor(
     private addressService: AddressService,
-    private orderService: OrderService
-    ) {
+    private orderService: OrderService,
+    private router: ActivatedRoute,
+    private route: Router
+  ) {
   }
 
   ngOnInit() {
+    this.router.params.subscribe(params => {
+      this.totalPrice = +params['totalPrice']; // dấu + để chuyển đổi thành kiểu number
+      this.totalQty = +params['totalQty'];
+
+    });
+
+
     this.getApiMap();
     console.log(this.list)
   }
+
   getApiMap(): void {
     this.addressService.getSuggestions(" 2855 quốc lộ 1a, Hồ chí minh  ").subscribe((data: any) => {
       this.getApiMap = data;
       data.forEach((item: any) => {
-        console.log(item );
+        console.log(item);
 
       })
       console.log(data);
     })
   }
 
-  // Phương thức gửi dữ liệu đơn hàng
   createOrder() {
-    const orderData = {
-      shippingAddress: "456 Đường Lê Lai, Quận 1, TP. Hồ Chí Minh",
-      phoneNumber: "0987654321",  // nhập trên form
-      status: "PENDING",
-      user: {id: 2},  // ID người dùng lấy từ khi đăng nhập
-      orderDetails: [
-        {quantity: 2, sku: {id: 1}},
-        {quantity: 1, sku: {id: 2}}
-      ]
-    };
-
-    // Gọi API tạo đơn hàng
-    this.orderService.createOrder(orderData).subscribe(
-      response => {
-        console.log("Order created successfully", response);
+    this.orderService.createOrderFromCart(this.userId).subscribe(
+      (response) => {
+        this.order = response;
+        console.log('Order created successfully', this.order);
+        // Chuyển hướng hoặc thông báo cho người dùng sau khi tạo đơn hàng thành công
       },
-      error => {
-        console.error("Error creating order", error);
+      (error) => {
+        console.error('There was an error!', error);
+        // Xử lý lỗi nếu có
       }
     );
+
   }
 
 }

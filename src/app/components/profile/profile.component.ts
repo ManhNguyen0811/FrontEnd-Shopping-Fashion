@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import {User} from '../../model/user/user';
 import {UserService} from '../../services/user/user.service';
 import {RouterLink} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink, CommonModule, FormsModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'

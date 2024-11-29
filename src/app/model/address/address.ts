@@ -4,7 +4,7 @@ export class Address {
     ward: string;
     street: string;
     isDefault: boolean;
-    userId: number;
+    user :{id:number};
 
 
     constructor(
@@ -13,13 +13,13 @@ export class Address {
         ward: string,
         street: string,
         isDefault: boolean,
-        userId: number
+        user:{id: number}
     ) {
         this.id = id;
         this.city = city;
         this.ward = ward;
         this.street = street;
         this.isDefault = isDefault;
-        this.userId = userId;
+        this.user = user;
     }
 }

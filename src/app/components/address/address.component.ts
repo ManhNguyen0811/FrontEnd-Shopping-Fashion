@@ -1,38 +1,24 @@
-import { Component } from '@angular/core';
-import {AddressService} from '../../services/address/address.service';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {RouterOutlet} from "@angular/router";
+import {GoogleMapService} from '../../services/google-map/googlemap.service';
+
+
+
+declare var google: any;
 
 @Component({
   selector: 'app-address',
   standalone: true,
-  imports: [
-    FormsModule
-  ],
+    imports: [
+        FormsModule,
+        RouterOutlet,
+
+    ],
   templateUrl: './address.component.html',
   styleUrl: './address.component.scss'
 })
 export class AddressComponent {
-  address = {
-    city: 'Hà Nội',
-    ward: 'Ba Đình',
-    street: '123 Phan Đình Phùng',
-    isDefault: false,
-    user: { id: 1 }
-  };
 
-  constructor(private addressService: AddressService) {}
-
-  onSubmit() {
-    this.addressService.createAddress(this.address).subscribe({
-      next: (response) => {
-        console.log('Địa chỉ đã được tạo:', response);
-
-      },
-      error: (err) => {
-        console.error('Có lỗi xảy ra khi tạo địa chỉ:', err);
-
-      }
-    });
-  }
 
 }

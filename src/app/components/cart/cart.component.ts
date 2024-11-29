@@ -29,8 +29,8 @@ export class CartComponent implements OnInit {
 
 
   ngOnInit() {
-    this.loadCart(2)
-
+    this.loadCart(1)
+console.log("listCartItem: "+ this.listCartItem)
 
   }
 
