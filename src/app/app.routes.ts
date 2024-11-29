@@ -10,6 +10,7 @@ import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
 import {AddressListComponent} from './components/address-list/address-list.component';
 import {ProfileComponent} from './components/profile/profile.component';
+import {WishlistComponent} from './components/wishlist/wishlist.component';
 
 
 export const routes: Routes = [
@@ -22,8 +23,7 @@ export const routes: Routes = [
      { path: 'forgotPass', component: ForgotPassComponent },
     { path: 'cart', component: CartComponent },
   { path: 'payments', component: PaymentsComponent },
-  { path: 'detail_product/:productId/:colorId/:sizeId', component: DetailProductComponent },
-  { path: 'addresses_list', component: AddressListComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'payments/:totalPrice/:totalQty', component: PaymentsComponent },
+  { path: 'detail_product/:id/:colorId/:sizeId', component: DetailProductComponent },
+
+
 ];

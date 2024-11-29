@@ -112,5 +112,8 @@
   },
   "cli": {
     "analytics": "bac2346a-760d-4ed7-ac23-d5004a125a22"
+  },
+  "cli": {
+    "analytics": false
   }
 }

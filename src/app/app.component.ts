@@ -17,6 +17,7 @@ import {PaymentsComponent} from './components/payments/payments.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ProfileComponent} from './components/profile/profile.component';
 import {AddressListComponent} from './components/address-list/address-list.component';
+import {WishlistComponent} from './components/wishlist/wishlist.component';
 
 @Component({
   selector: 'app-root',
