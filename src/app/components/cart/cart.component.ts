@@ -37,6 +37,7 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.loadCart(this.userID)
 console.log("listCartItem: "+ this.listCartItem)
+
   }
 
 
