@@ -24,15 +24,16 @@ export class WishlistComponent implements OnInit {
   listWishlistResponse?: WishlistResponse;
   listWishlistItem?: WishlistItem[];
 
+  userid : number = 1
   constructor(private WishlistService: WishlistService) { }
 
   ngOnInit() {
-    this.loadWishlist(2);//chuyền user id
+    this.loadWishlist(this.userid);//chuyền user id
   }
 
   deleteWishlist(id: number) {
     this.WishlistService.deleteWishlistItem(id).subscribe(() => {
-      this.loadWishlist(2);//chuyền user id
+      this.loadWishlist(this.userid);//chuyền user id
     });
   }
 

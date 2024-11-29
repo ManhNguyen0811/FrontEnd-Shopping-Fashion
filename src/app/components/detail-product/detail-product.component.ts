@@ -76,7 +76,7 @@ export class DetailProductComponent implements OnInit {
       this.message = "Số Lượng Không Hợp Lệ !!!"
       this.showSuccessMessage = true;
       setTimeout(() => {
-        this.getTotalItems(1)
+        this.getTotalItems(userId)
         this.showSuccessMessage = false;
       }, 1000);
       return ;
@@ -93,7 +93,7 @@ export class DetailProductComponent implements OnInit {
         this.showSuccessMessage = true;
 
         setTimeout(() => {
-          this.getTotalItems(1)
+          this.getTotalItems(userId)
           this.showSuccessMessage = false;
         }, 1000);
 
@@ -103,7 +103,7 @@ export class DetailProductComponent implements OnInit {
         this.showSuccessMessage = true;
         // this.cdr.detectChanges();
         setTimeout(() => {
-          this.getTotalItems(1)
+          this.getTotalItems(userId)
           this.showSuccessMessage = false;
         }, 1000);
         console.log(error,"Thêm thất bại.");
@@ -211,7 +211,7 @@ export class DetailProductComponent implements OnInit {
   setActiveSize(index: number, idSize: number): void {
     // this.activeIndexSize = index;
     this.sizeId = idSize;  // Lưu lại sizeId
-    console.log("index size: ", index, "sizeId: ", idSize);
+
 
     // Cập nhật lại giá trị giá trị dựa trên size và color hiện tại
     this.getOriginalPriceBySizeAndColor(this.sizeId, this.colorId);
