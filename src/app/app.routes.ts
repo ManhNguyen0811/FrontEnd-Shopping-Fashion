@@ -9,6 +9,7 @@ import { ForgotPasswordComponent} from './components/forgot-password/forgot-pass
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
 import {WishlistComponent} from './components/wishlist/wishlist.component';
+import {AuthGuardFn} from './guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -20,9 +21,7 @@ export const routes: Routes = [
      { path: 'signin', component: SigninComponent },
      { path: 'forgotPass', component: ForgotPasswordComponent },
      { path: 'cart', component: CartComponent },
-     { path: 'wishlist', component: WishlistComponent },
-     { path: 'payments', component: PaymentsComponent },
+     { path: 'wishlist', component: WishlistComponent,canActivate:[AuthGuardFn]},
+     { path: 'payments', component: PaymentsComponent,canActivate:[AuthGuardFn]},
      { path: 'detail_product/:productId/:colorId/:sizeId', component: DetailProductComponent },
-
-
 ];
