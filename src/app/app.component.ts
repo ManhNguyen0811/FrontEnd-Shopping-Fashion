@@ -26,7 +26,7 @@ import {WishlistComponent} from './components/wishlist/wishlist.component';
     RouterLink,
     HeaderComponent,SigninComponent,ForgotPassComponent,
     FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,ReactiveFormsModule
-   , PaymentsComponent,ProfileComponent,AddressListComponent
+   , PaymentsComponent,ProfileComponent,AddressListComponent, WishlistComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

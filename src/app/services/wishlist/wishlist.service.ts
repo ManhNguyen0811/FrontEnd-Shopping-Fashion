@@ -3,6 +3,7 @@ import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {WishlistResponse} from '../../model/wishlist/WishlistResponse';
+import {WishlistDTO} from '../../model/wishlist/WishlistDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,9 @@ export class WishlistService {
 
   deleteWishlistItem(wishlistId : number): Observable<void>{
     return this.http.delete<void>(`${this.apiUrl}/wishlist?wishlistId=${wishlistId}`);
+  }
+
+  addToCart(userId: number, wishlistDTO : WishlistDTO): Observable<any> {
+    return this.http.post(`${this.apiUrl}/wishlist?userId=${userId}`, wishlistDTO);
   }
 }

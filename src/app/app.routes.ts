@@ -22,6 +22,7 @@ export const routes: Routes = [
      { path: 'signin', component: SigninComponent },
      { path: 'forgotPass', component: ForgotPassComponent },
     { path: 'cart', component: CartComponent },
+  {path: 'wishlist', component: WishlistComponent },
   { path: 'payments', component: PaymentsComponent },
   { path: 'detail_product/:id/:colorId/:sizeId', component: DetailProductComponent },
 
