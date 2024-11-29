@@ -37,9 +37,10 @@ export class LoginComponent implements OnInit{
 
 */
 
-  email: string = 'john@gmail.com';
-  password: string = 'password123';
+  email: string = '';
+  password: string = '';
   showPassword: boolean = false;
+  errorMessage: string = ''; // Thêm biến lưu lỗi
 
   roles: Role[] = []; // Mảng roles
   rememberMe: boolean = true;
@@ -121,18 +122,13 @@ export class LoginComponent implements OnInit{
             },
 
             error: (error: any) => {
-              debugger;
-              alert(error.error.message);
+              this.errorMessage = error.error.message || 'Đã xảy ra lỗi'; // Hiển thị lỗi cụ thể
             }
-          })
+          });
         }
       },
-      complete: () => {
-        debugger;
-      },
       error: (error: any) => {
-        debugger;
-        alert(error.error.message);
+        this.errorMessage = 'Email hoặc mật khẩu không đúng'; // Thông báo lỗi khi đăng nhập thất bại
       }
     });
   }

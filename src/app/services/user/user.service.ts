@@ -28,6 +28,7 @@ export class UserService {
     @Inject(DOCUMENT) private document: Document
   ) {
     this.localStorage = document.defaultView?.localStorage;
+
     this.apiConfig = {
       headers: this.httpUtilService.createHeaders(),
     };

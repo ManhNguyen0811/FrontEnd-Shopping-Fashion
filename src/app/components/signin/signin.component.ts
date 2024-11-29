@@ -39,13 +39,6 @@ export class SigninComponent {
     //inject
   }
 
-  isPhoneInvalid(): boolean {
-    return (
-      this.registerForm?.controls['phone']?.touched &&
-      this.registerForm?.controls['phone']?.invalid
-    );
-  }
-
 
   register() {
     const message =

@@ -30,22 +30,48 @@
                                 <input class="form-control" name="email"
                                        [(ngModel)]="email"
                                        (input)="onEmailChange()"
-                                       name="email"
-                                       (focus)="loginForm.form.markAsTouched()"
+                                       id="email"
+                                       #emailCtrl="ngModel"
+                                       required
+                                       pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                                 />
 
+                              <div *ngIf="emailCtrl.touched && emailCtrl.invalid" class="error mt-2">
+                                <div *ngIf="emailCtrl.errors?.['required']"
+                                     class="text-danger">Vui lòng nhập email.</div>
+                                <div *ngIf="emailCtrl.errors?.['pattern']"
+                                     class="text-danger">Vui lòng nhập email đúng định dạng.</div>
+                              </div>
                             </div>
+
+
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
                                 <label class="form-label fw-bold" >MẬT KHẨU</label>
                                 <input type="{{ showPassword ? 'text' : 'password' }}"
-                                       [(ngModel)]="password" class="form-control " name="password" />
+                                       [(ngModel)]="password"
+                                       class="form-control "
+                                       name="password"
+                                        id = "password"
+                                       #passwordCtrl="ngModel"
+                                       required
+                                       pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$"
+                                />
+
+                              <div *ngIf="passwordCtrl.touched && passwordCtrl.invalid" class="error mt-2">
+                                <div *ngIf="passwordCtrl.errors?.['required']"
+                                     class="text-danger">Vui lòng nhập mật khẩu.</div>
+                                <div *ngIf="passwordCtrl.errors?.['pattern']"
+                                     class="text-danger">
+                                  Mật khẩu phải có 6 kí tự bao gồm kí tự hoa và số.
+                                </div>
+                              </div>
                             </div>
 
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
                                 <div class="row">
                                     <div class="col-9 ">
-                                        <div class="form-check">
+                                        <div class="form-check ps-0">
                                           <i class="password-toggle fas text-black ms-0 me-3" [ngClass]="showPassword ?
                         'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
                                             <label class="form-check-label"
@@ -63,6 +89,10 @@
                                     </div>
                                 </div>
                             </div>
+
+                          <div *ngIf="errorMessage" class="error-message text-danger mb-4 ">
+                            {{ errorMessage }}
+                          </div>
 
                             <!-- Submit button -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
