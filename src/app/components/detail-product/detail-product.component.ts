@@ -45,7 +45,7 @@ export class DetailProductComponent implements OnInit {
   activeIndexSize: number | null = null;
   activeIndexColor: number | null = null;
 
-
+  userId : number =1
 
   constructor(private detailProductService: DetailProductService,
               private cartService: CartService,
