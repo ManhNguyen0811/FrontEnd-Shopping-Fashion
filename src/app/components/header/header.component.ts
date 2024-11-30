@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
-import { NgForOf } from '@angular/common';
+import {isPlatformBrowser, NgForOf} from '@angular/common';
 import { CommonModule } from '@angular/common';
 import {CategoryService} from '../../services/category/category.service';
 import {Category} from '../../model/category';
@@ -11,6 +11,9 @@ import {TokenService} from '../../services/token/token.service';
 import {UserService} from '../../services/user/user.service';
 import {UserResponse} from '../../responses/user/user.response';
 import { CartService } from '../../services/cart/cart.service';
+import {Subscription} from 'rxjs';
+import {CartItem} from '../../model/cart/CartItem';
+import {CartResponse} from '../../model/cart/CartResponse';
 
 
 @Component({
@@ -25,26 +28,67 @@ export class HeaderComponent implements OnInit {
   totalItems: number = 0
   products?: Product[];
   totalPages?: number;
-
   userResponse?: UserResponse | null;
   isPopoverOpen = false;
   activeNavItem: number = 0;
+  isLoggedIn: boolean = false;
+  userId: number = 0;
+  private cartSubscription: Subscription = new Subscription();
+
+  cartItems: CartItem[] = [];
+  cartQuantity: number = 0;
 
   constructor(
     private categoryService: CategoryService,
     private userService: UserService,
     private tokenService: TokenService,
     private router: Router,
-    private cartService: CartService,
+    private cartService: CartService, @Inject(PLATFORM_ID) private platformId: Object,
   ) {
   }
 
   ngOnInit(): void {
-    this.getCategoryAll();
-    this.userResponse = this.userService.getUserResponseFromLocalStorage();
+    this.userId = this.tokenService.getUserId();
 
-    this.getTotalItems(1)
-    console.log(this.totalItems)
+    this.tokenService.checkLoginStatus();  // Check login status and sync
+    this.tokenService.isLoggedIn$.subscribe((status) => {
+      this.isLoggedIn = status; // Update login status
+
+      if (this.isLoggedIn) {
+        this.loadUserCart(this.userId);// Fetch user cart from the server
+      } else {
+        this.loadGuestCart(); // Load guest cart from localStorage if not logged in
+      }
+    });
+
+    this.cartSubscription = this.cartService.cart$.subscribe((cart) => {
+      this.totalItems = cart.reduce((sum, item) => sum + item.quantity, 0); // Calculate total items in cart
+      this.cartQuantity = this.totalItems;
+    });
+
+    this.cartService.cartUser$.subscribe((cartItems: CartItem[]) => {
+      if (this.isLoggedIn) {
+        this.cartItems = cartItems;
+        this.cartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+      }
+    });
+
+    // Fetch categories and user data
+    this.getCategoryAll();
+    this.updateCartTotal();
+    this.userResponse = this.userService.getUserResponseFromLocalStorage();
+  }
+
+  loadUserCart(userId: number): void {
+    this.cartService.getDataCart(userId).subscribe((data: CartResponse) => {
+      this.cartService.updateCartUser(data.cartItem); // Update cart with fetched items
+    });
+  }
+
+  loadGuestCart(): void {
+    // Load guest cart logic here (from localStorage)
+    const guestCart = this.cartService.getCartFromLocalStorage();
+    this.cartService.updateCartUser(guestCart); // Update cart for guest user
   }
 
   getCategoryAll(): void {
@@ -81,5 +125,58 @@ export class HeaderComponent implements OnInit {
     this.isPopoverOpen = false; // Close the popover after clicking an item
   }
 
+  logout(): void {
+    this.tokenService.removeToken();
+    this.isLoggedIn = false;  // Cập nhật lại trạng thái là chưa đăng nhập
+  }
+
+  updateCartTotal(): void {
+    console.log(this.isLoggedIn);
+    if (this.isLoggedIn) {
+      // If the user is logged in, get the total item count from the API
+      const userId = this.tokenService.getUserId();
+      this.cartService.getTotalItemUrl(userId).subscribe(
+        (response) => {
+          console.log(response); // Check API response
+          console.log(response.totalItem);
+          if (response && response.totalItem !== undefined) {
+            this.totalItems = response.totalItem;
+
+          } else {
+            console.error('No totalItem data from API');
+            this.fallbackToLocalStorage(); // Use localStorage if API data is missing
+          }
+        },
+        (error) => {
+          console.error('Error fetching data from API:', error);
+          this.fallbackToLocalStorage(); // Fallback to localStorage on error
+        }
+      );
+    } else {
+      // If the user is not logged in, fetch the total items from localStorage
+      if (isPlatformBrowser(this.platformId)) {
+        const guestCart = this.getCartFromLocalStorage();
+        this.totalItems = guestCart.reduce((sum, item) => sum + item.quantity, 0);
+      }
+    }
+  }
+
+// Fallback to localStorage if the API fails or returns missing data
+  fallbackToLocalStorage(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const guestCart = this.getCartFromLocalStorage();
+      this.totalItems = guestCart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+  }
+
+  getCartFromLocalStorage(): any[] {
+    // Fetch the cart from localStorage if running in the browser
+    const cart = localStorage.getItem('guestCart');
+    return cart ? JSON.parse(cart) : [];
+  }
+
+  ngOnDestroy(): void {
+    this.cartSubscription.unsubscribe(); // Unsubscribe to avoid memory leaks
+  }
 }
 

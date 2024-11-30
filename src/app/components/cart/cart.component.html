@@ -22,7 +22,6 @@
                 <p></p>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                     <div class="row">
-
                         <!-- render product cart -->
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 product-cartOne"
                              *ngFor="let listCartItem of listCartItem ">
@@ -52,9 +51,16 @@
                                                 <div class="col-7" style="padding-top: 10px;margin-left: 30px;">
                                                     <div class="qty-product-cart">
                                                         <div class="input-group mb-3">
-                                                          <span class="input-group-text" (click)="activeMinus(listCartItem)"><i class="fa-solid fa-minus"></i></span>
-                                                          <input type="text" [(ngModel)]="listCartItem.quantity" (blur)="updateQty(listCartItem.id, listCartItem.quantity)">
-                                                          <span class="input-group-text" (click)="activeAdd(listCartItem)"><i class="fa-solid fa-plus"></i></span>
+                                                          <div class="input-group mb-3">
+  <span class="input-group-text" (click)="activeMinus(listCartItem)">
+    <i class="fa-solid fa-minus"></i>
+  </span>
+                                                            <input type="number" [(ngModel)]="listCartItem.quantity"
+                                                                   (ngModelChange)="updateQty(listCartItem.id, listCartItem.quantity)">
+                                                            <span class="input-group-text" (click)="activeAdd(listCartItem)">
+    <i class="fa-solid fa-plus"></i>
+  </span>
+                                                          </div>
 
                                                         </div>
                                                     </div>

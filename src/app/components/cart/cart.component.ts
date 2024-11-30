@@ -1,71 +1,82 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
-import {CartService} from '../../services/cart/cart.service';
-
-import {CartResponse} from '../../model/cart/CartResponse';
-import {firstValueFrom, Observable} from 'rxjs';
-import {CartItem} from '../../model/cart/CartItem';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {CartDTO} from '../../model/cart/CartDTO';
-
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { CartService } from '../../services/cart/cart.service';
+import { CartResponse } from '../../model/cart/CartResponse';
+import { CartItem } from '../../model/cart/CartItem';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TokenService } from '../../services/token/token.service';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
+import { CartItemResponse } from '../../responses/cart/cart.response';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
   imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+  styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
 
-  userID : number  = 1
-
-
+  userID: number = 0;
   showSuccessMessage: boolean = false;
-  message: string = ""
-  totalPrice : number = 0;
-  totalQty : number = 0;
-  listCartResponse? : CartResponse;
-  listCartItem? : CartItem[];
-  constructor(private cartService: CartService,  private router: Router,
+  message: string = "";
+  totalPrice: number = 0;
+  totalQty: number = 0;
+  listCartResponse?: CartResponse;
+  listCartItem?: CartItemResponse[];
 
-              ) {
-  }
 
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private tokenService: TokenService,
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    this.loadCart(this.userID)
-    console.log(this.listCartItem)
+    this.userID = this.tokenService.getUserId();
+    if (this.userID) {
+      this.loadCart(this.userID);
+    } else {
+      this.loadGuestCart();
+    }
   }
 
+  // Update product quantity in the cart
+  updateQty(cartId: number | null, qty: number, skuId?: number): void {
+    if (this.userID) {
+      // Đối với người dùng đã đăng nhập
+      this.cartService.updateQty(cartId, qty).subscribe({
+        next: () => {
+          console.log('Quantity updated via API');
+          this.loadCart(this.userID);
+          location.reload();// Reload cart data from API
+        },
+        error: (err) => {
+          console.error('Error updating quantity via API:', err);
+        }
+      });
+    } else {
+      // Đối với khách (localStorage)
+      const guestCart = this.cartService.getCartFromLocalStorage();
 
+      if (skuId) {
+        // Cập nhật số lượng trong localStorage
+        const updatedCart = guestCart.map(item =>
+          item.skuId === skuId ? { ...item, quantity: qty } : item
+        );
 
-  updateQty(cartId: number, qty: number) {
-
-
-    // Gọi dịch vụ để cập nhật số lượng giỏ hàng
-    this.cartService.updateQty(cartId, qty).subscribe({
-      next: () => {
-        // Sau khi cập nhật số lượng, lấy lại thông tin tổng số item trong giỏ hàng
-        this.cartService.getTotalItemUrl(this.userID).subscribe({
-          next: (data) => {
-            // Xử lý dữ liệu trả về nếu cần
-            console.log("Cập nhật giỏ hàng thành công", data);
-          },
-          error: (err) => {
-            console.error("Lỗi khi lấy tổng số item trong giỏ hàng", err);
-          }
-        });
-      },
-      error: (err) => {
-        console.error("Lỗi khi cập nhật số lượng sản phẩm", err);
+        // Lưu lại localStorage và cập nhật trạng thái giỏ hàng
+        this.cartService.updateCartInLocalStorage(updatedCart);
+        this.loadGuestCart(); // Reload guest cart
       }
-    });
+    }
   }
 
-
-
+  // Load cart data from API for logged-in user
   loadCart(userid: number): void {
     this.totalPrice = 0;
     this.totalQty = 0;
@@ -81,24 +92,106 @@ export class CartComponent implements OnInit {
     });
   }
 
-  activeMinus(cartItem: { quantity: number, id : number }) {
+  // Load guest cart from
+  loadGuestCart(): void {
+    const guestCart = this.cartService.getCartFromLocalStorage();
+    this.totalPrice = 0;
+    this.totalQty = 0;
 
-    if (cartItem.quantity == 1) {
-      cartItem.quantity--;
-      this.updateQty(cartItem.id,cartItem.quantity);
-      window.location.reload()
-    }else{
-      cartItem.quantity--;
-      this.updateQty(cartItem.id,cartItem.quantity);
-
+    if (guestCart && guestCart.length > 0) {
+      this.cartService.getGuestCart(guestCart).subscribe({
+        next: (data: CartItemResponse[]) => {
+          console.log('Guest cart response:', data);
+          this.listCartItem = data;
+          data.forEach(item => {
+            this.totalPrice += item.price * item.quantity;
+            this.totalQty += item.quantity;
+          });
+        },
+        error: (err) => {
+          console.error('Error loading guest cart:', err);
+        }
+      });
+    } else {
+      console.log('No items in guest cart.');
     }
   }
-  activeAdd(cartItem: { quantity: number, id : number }) {
-    cartItem.quantity++; // Increase quantity
-    this.updateQty(cartItem.id,cartItem.quantity);
 
+  // Decrease quantity of a product in the cart
+  activeMinus(cartItem: CartItemResponse) {
+    if (cartItem.quantity > 1) {
+      cartItem.quantity--;
+
+      if (!this.userID) {
+        // Cập nhật trong localStorage
+        this.updateQty(null, cartItem.quantity, cartItem.skuResponse.id);
+      } else {
+        // Cập nhật qua API
+
+        this.updateQty(cartItem.id, cartItem.quantity);
+      }
+    } else {
+      // Xóa sản phẩm khi số lượng bằng 1
+      if (!this.userID) {
+        this.removeItemFromLocalStorage(cartItem.skuResponse.id);
+      } else {
+        this.removeItem(cartItem.skuResponse.id); // Xóa qua API
+      }
+    }
   }
 
 
+  activeAdd(cartItem: CartItemResponse) {
+    cartItem.quantity++;
 
+    if (!this.userID) {
+      // Cập nhật localStorage
+      this.updateQty(null, cartItem.quantity, cartItem.skuResponse.id);
+    } else {
+      // Cập nhật qua API
+      this.updateQty(cartItem.id, cartItem.quantity);
+    }
+  }
+
+  removeItem(cartId?: number, cartItem?: CartItemResponse) {
+    if (this.userID && cartId) {
+      // Xóa qua API nếu đã đăng nhập
+      this.cartService.removeItem(cartId).subscribe({
+        next: () => {
+          this.loadCart(this.userID); // Làm mới giỏ hàng sau khi xóa
+        },
+        error: (err) => {
+          console.error("Error removing item from cart", err);
+        }
+      });
+    } else if (cartItem && cartItem.skuResponse.id) {
+      // Xóa trong localStorage nếu không đăng nhập
+      this.removeItemFromLocalStorage(cartItem.skuResponse.id);
+    }
+  }
+  removeItemFromLocalStorage(skuId: number | undefined): void {
+    const guestCart = this.cartService.getCartFromLocalStorage();
+
+    // Lọc bỏ phần tử cần xóa
+    const updatedCart = guestCart.filter(item => item.skuId !== skuId);
+
+    // Lưu lại danh sách mới vào localStorage
+    this.cartService.removeFromLocalStorage(updatedCart);
+
+    // Cập nhật listCartItem và tổng số lượng, giá
+    this.listCartItem = this.listCartItem?.filter(item => item.skuResponse.id !== skuId);
+    this.totalPrice = 0;
+    this.totalQty = 0;
+
+    this.listCartItem?.forEach(item => {
+      this.totalPrice += item.price * item.quantity;
+      this.totalQty += item.quantity;
+    });
+
+    // Nếu giỏ hàng trống, xử lý trường hợp này
+    if (this.listCartItem?.length === 0) {
+      console.log('Giỏ hàng trống.');
+      this.listCartItem = [];
+    }
+  }
 }

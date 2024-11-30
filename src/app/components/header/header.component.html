@@ -76,17 +76,29 @@
                   </ul>
               </li> -->
 
-                <li class="nav-item dropdown" style="margin-left: 350px;">
-                    <a class="nav-link tabs" href="#" id="navbarDropdownMenuLink" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false" routerLink="/login">
-                        <i class="fa-regular fa-user"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" routerLink="/login">Đăng Nhập</a></li>
-                        <li><a class="dropdown-item" routerLink="/signin">Đăng Ký</a></li>
-                        <li><a class="dropdown-item" routerLink="/profile">Hồ Sơ</a></li>
-                    </ul>
-                </li>
+              <li class="nav-item dropdown" style="margin-left: 350px;">
+                <a class="nav-link tabs" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa-regular fa-user"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <!-- Hiển thị khi người dùng chưa đăng nhập -->
+                  <li class="nav-item" *ngIf="!isLoggedIn">
+                    <a class="dropdown-item" routerLink="/login">Đăng Nhập</a>
+                  </li>
+                  <li class="nav-item" *ngIf="!isLoggedIn">
+                    <a class="dropdown-item" routerLink="/signin">Đăng Ký</a>
+                  </li>
+
+                  <!-- Hiển thị khi người dùng đã đăng nhập -->
+                  <li class="nav-item" *ngIf="isLoggedIn">
+                    <a class="dropdown-item" routerLink="/profile">Hồ Sơ</a>
+                  </li>
+                  <li class="nav-item" *ngIf="isLoggedIn">
+                    <a class="dropdown-item" href="#" (click)="logout()">Đăng Xuất</a>
+                  </li>
+                </ul>
+              </li>
+
                 <li class="nav-item ">
                     <a class="nav-link tabs" routerLink="/wishlist">
                         <i class="fa-regular fa-heart"></i>
