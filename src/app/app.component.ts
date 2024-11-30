@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http';
 import { SigninComponent } from './components/signin/signin.component';
-import { OTPComponent } from './components/OTP/OTP.component';
+import { ForgotPassComponent } from './components/forgot-pass/forgot-pass.component';
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -24,7 +24,7 @@ import {WishlistComponent} from './components/wishlist/wishlist.component';
   standalone: true,
   imports: [RouterOutlet,RouterModule,CartComponent,
     RouterLink,
-    HeaderComponent,SigninComponent,OTPComponent,
+    HeaderComponent,SigninComponent,ForgotPassComponent,
     FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,ReactiveFormsModule
    , PaymentsComponent,ProfileComponent,AddressListComponent, WishlistComponent
   ],

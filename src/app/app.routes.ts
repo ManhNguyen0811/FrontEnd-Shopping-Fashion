@@ -8,6 +8,8 @@ import { SigninComponent } from './components/signin/signin.component';
 import { ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
 import { CartComponent } from './components/cart/cart.component';
 import {PaymentsComponent} from './components/payments/payments.component';
+import {AddressListComponent} from './components/address-list/address-list.component';
+import {ProfileComponent} from './components/profile/profile.component';
 import {WishlistComponent} from './components/wishlist/wishlist.component';
 import {AuthGuardFn} from './guards/auth.guard';
 
