@@ -1,0 +1,20 @@
+<button class="chatbot-toggler" (click)="toggleChat()">
+  <span class="material-symbols-rounded">mode_comment</span>
+  <span class="material-symbols-outlined">close</span>
+</button>
+<div class="chatbot" [class.show]="showChatbot">
+  <header>
+    <h3>FPT Polytechnic</h3>
+    <span class="close-btn material-symbols-outlined" (click)="toggleChat()">close</span>
+  </header>
+  <ul class="chatbox">
+    <li *ngFor="let chat of chatbox" [ngClass]="chat.className">
+      <span *ngIf="chat.className === 'incoming'"><img src="/assets/logo.png" alt="icon" width="30" height="30"></span>
+      <div>{{ chat.message }}</div>
+    </li>
+  </ul>
+  <div class="chat-input">
+    <textarea [(ngModel)]="userMessage" placeholder="Nhập câu hỏi ở đây..." spellcheck="false" required></textarea>
+    <span id="send-btn" class="material-symbols-rounded" (click)="sendMessage()">send</span>
+  </div>
+</div>

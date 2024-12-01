@@ -18,6 +18,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ProfileComponent} from './components/profile/profile.component';
 import {AddressListComponent} from './components/address-list/address-list.component';
 import {WishlistComponent} from './components/wishlist/wishlist.component';
+import {ChatbotComponent} from './components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,7 @@ import {WishlistComponent} from './components/wishlist/wishlist.component';
     RouterLink,
     HeaderComponent,SigninComponent,ForgotPassComponent,
     FooterComponent,HomeComponent,ProductsComponent,DetailProductComponent,ReactiveFormsModule
-   , PaymentsComponent,ProfileComponent,AddressListComponent, WishlistComponent
+   , PaymentsComponent,ProfileComponent,AddressListComponent, WishlistComponent, ChatbotComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
