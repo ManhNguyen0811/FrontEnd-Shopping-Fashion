@@ -18,6 +18,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import {TokenService} from '../../services/token/token.service';
 import {BehaviorSubject} from 'rxjs';
 import {CartResponse} from '../../model/cart/CartResponse';
+import {WishlistService} from '../../services/wishlist/wishlist.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -30,17 +31,17 @@ export class DetailProductComponent implements OnInit {
   showSuccessMessage: boolean = false;
   message: string = ""
   detailProductList?: DetailProduct;
-  skusList? :SKU[]
-  productImagesList? : ProductImage[];
-  dataSkus? : SelectedSku;
+  skusList?: SKU[]
+  productImagesList?: ProductImage[];
+  dataSkus?: SelectedSku;
   dataImg?: SelectedImage;
- quantity: number =1;
-  originalPrice : number | undefined = 0;
-  salePrice : number | undefined = 0;
-  skuId : number | undefined = undefined;
+  quantity: number = 1;
+  originalPrice: number | undefined = 0;
+  salePrice: number | undefined = 0;
+  skuId: number | undefined = undefined;
 
-  colorName : string = "";
-  sizeName : string = "";
+  colorName: string = "";
+  sizeName: string = "";
   qtyInStock: number = 0;
   productId?: number;
   sizeId?: number;
@@ -48,7 +49,7 @@ export class DetailProductComponent implements OnInit {
   activeIndexSize: number | null = null;
   activeIndexColor: number | null = null;
   localStorage?: Storage;
-  userId : number = 0;
+  userId: number = 0;
 
   constructor(private detailProductService: DetailProductService,
               private cartService: CartService,
@@ -56,20 +57,21 @@ export class DetailProductComponent implements OnInit {
               private router: ActivatedRoute,
               private route: Router,
               private tokenService: TokenService,
-              ) {
+              private wishlistService: WishlistService
+  ) {
   }
 
   ngOnInit() {
-  this.userId = this.tokenService.getUserId();
+    this.userId = this.tokenService.getUserId();
     this.router.params.subscribe(params => {
       this.productId = +params['productId']; // dấu + để chuyển đổi thành kiểu number
       this.sizeId = +params['sizeId'];
       this.colorId = +params['colorId'];
-      this.loadDetailProduct(this.productId,this.colorId,this.sizeId)
-      this.setActiveSize(0,this.sizeId)
-      this.setActiveColor(0,this.colorId)
+      this.loadDetailProduct(this.productId, this.colorId, this.sizeId)
+      this.setActiveSize(0, this.sizeId)
+      this.setActiveColor(0, this.colorId)
       this.originalPrice = this.dataSkus?.originalPrice
-      this.salePrice =  this.dataSkus?.salePrice
+      this.salePrice = this.dataSkus?.salePrice
 
     });
   }
@@ -117,7 +119,6 @@ export class DetailProductComponent implements OnInit {
       );
     }
   }
-
 
 
 // Thêm sản phẩm vào localStorage (cho khách hàng không đăng nhập)
@@ -169,12 +170,11 @@ export class DetailProductComponent implements OnInit {
       this.originalPrice = this.dataSkus?.originalPrice;
       this.salePrice = this.dataSkus?.salePrice;
 
-      this.getOriginalPriceBySizeAndColor(sizeId,colorId)
+      this.getOriginalPriceBySizeAndColor(sizeId, colorId)
     }, (error) => {
       console.error("Error loading data: ", error);
     });
   }
-
 
 
   getOriginalPriceBySizeAndColor(idsize: number, idcolor: number | undefined): void {
@@ -196,8 +196,6 @@ export class DetailProductComponent implements OnInit {
       console.warn("Không tìm thấy SKU phù hợp!");
     }
   }
-
-
 
 
   getUniqueColors(skus?: any[]): any[] {
@@ -242,8 +240,8 @@ export class DetailProductComponent implements OnInit {
     // this.setActiveColor(2,dataImg.colorId)
 
 
-
   }
+
   setActiveSize(index: number, idSize: number): void {
     // this.activeIndexSize = index;
     this.sizeId = idSize;  // Lưu lại sizeId
@@ -304,9 +302,6 @@ export class DetailProductComponent implements OnInit {
   }
 
 
-
-
-
   updateUrl(): void {
     if (this.productId && this.sizeId && this.colorId) {
       this.route.navigate(['/detail_product', this.productId, this.colorId, this.sizeId], {
@@ -317,6 +312,7 @@ export class DetailProductComponent implements OnInit {
 
 
   activeQty: number = 1;
+
   activeMinus() {
     if (this.activeQty == 1) {
       this.activeQty = 1;
@@ -325,9 +321,11 @@ export class DetailProductComponent implements OnInit {
     }
 
   };
+
   activeAdd() {
     this.activeQty++;
   };
+
   validateQty(): void {
     //@ts-ignore
     if (this.activeQty === '' || this.activeQty === null || this.activeQty === undefined) {
@@ -336,7 +334,7 @@ export class DetailProductComponent implements OnInit {
       return;
     }
     //@ts-ignore
-    if (this.activeQty === "" ||!this.activeQty || this.activeQty <= 0) {
+    if (this.activeQty === "" || !this.activeQty || this.activeQty <= 0) {
       this.message = 'Số lượng phải lớn hơn 0!';
       this.showSuccessMessage = true;
       setTimeout(() => {
@@ -365,5 +363,40 @@ export class DetailProductComponent implements OnInit {
     if ((charCode < 48 || charCode > 57) && charCode !== 8) {
       event.preventDefault();
     }
+  }
+
+  addToWishlist(userId: number, skuId: number | undefined): void {
+    if (!this.skuId) {
+      this.message = "Vui lòng chọn màu sắc và kích thước trước khi thêm vào giỏ hàng!";
+      this.showSuccessMessage = true;
+      setTimeout(() => {
+        this.showSuccessMessage = false;
+      }, 1000);
+      return;
+    }
+
+    const wishListDTO = {
+      skuId: this.skuId, // Sử dụng đúng SKU đã chọn
+    };
+
+      this.wishlistService.addToWishlist(this.userId, wishListDTO).subscribe(
+        () => {
+          this.message = "Thêm sản phẩm vào wishlist thành công!";
+          this.showSuccessMessage = true;
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+          }, 1000);
+        },
+        (error) => {
+          this.message = "Thêm sản phẩm vào wishlist thất bại!";
+          this.showSuccessMessage = true;
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+          }, 1000);
+          console.error("Thêm sản phẩm thất bại", error);
+        }
+      );
+
+
   }
 }

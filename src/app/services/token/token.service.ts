@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
+// @ts-ignore
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {BehaviorSubject} from 'rxjs';
 

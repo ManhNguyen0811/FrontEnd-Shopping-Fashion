@@ -21,7 +21,7 @@ export class WishlistService {
     return this.http.delete<void>(`${this.apiUrl}/wishlist?wishlistId=${wishlistId}`);
   }
 
-  addToWishlist(userId: number, wishlistDTO: { skuId: number | undefined }): Observable<any> {
+  addToWishlist(userId: number, wishlistDTO:{skuId : number}): Observable<any> {
     return this.http.post(`${this.apiUrl}/wishlist?userId=${userId}`, wishlistDTO);
   }
 }

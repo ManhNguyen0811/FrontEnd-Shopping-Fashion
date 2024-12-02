@@ -117,11 +117,12 @@ export class HeaderComponent implements OnInit {
     if (index === 0) {
       debugger
       this.router.navigate(['/user-profile']);
-    } else if (index === 2) {
-      this.userService.removeUserFromLocalStorage();
-      this.tokenService.removeToken();
-      this.userResponse = this.userService.getUserResponseFromLocalStorage();
     }
+    // else if (index === 2) {
+    //   this.userService.removeUserFromLocalStorage();
+    //   this.tokenService.removeToken();
+    //   this.userResponse = this.userService.getUserResponseFromLocalStorage();
+    // }
     this.isPopoverOpen = false; // Close the popover after clicking an item
   }
 
